@@ -1,26 +1,40 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-vert-sauge: #687C68;
+  --color-vert-profond: #2F4537;
+  --color-creme: #F6F1E8;
+  --color-blanc-doux: #FFFDF8;
+  --color-terracotta: #D9825B;
+  --color-anthracite: #26302A;
+  --color-gris-doux: #D8D6CE;
+  --breakpoint-3xl: 1800px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Font utilities referencing Next.js injected CSS variables */
+@utility font-epilogue {
+  font-family: var(--font-epilogue), system-ui, sans-serif;
+}
+@utility font-manrope {
+  font-family: var(--font-manrope), system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@keyframes star-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes border-beam {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #FFFDF8;
+  color: #26302A;
+  font-family: var(--font-manrope), system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-epilogue), system-ui, sans-serif;
 }

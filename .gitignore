@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Screenshots et fichiers temporaires
+*.png
+*.pptx
+read-pdf.mjs
+read-pdf.cjs
+supabase-setup.sql
+
+# PDFs à la racine (pas dans /public)
+/*.pdf
+
+# Facture dans public (ne pas exposer)
+public/Facture-202606-54-pha.pdf
