@@ -30,7 +30,7 @@ export function SoutenirPresident() {
           {/* Photo pleine largeur horizontale */}
           <div className="relative w-full h-80 md:h-[480px]">
             <Image
-              src="/quentin-bacro-president.png"
+              src="/damien-bacro-president.png"
               alt="Damien Bacro, président d'Habitat Solidaire"
               fill
               className="object-cover object-center"
