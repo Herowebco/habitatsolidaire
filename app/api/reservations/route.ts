@@ -19,6 +19,21 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Champs manquants" }, { status: 400 });
   }
 
+  // Validation des dates
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate() + 7);
+  maxDate.setHours(23, 59, 59, 999);
+  const requested = new Date(date_souhaitee);
+
+  if (requested < today) {
+    return NextResponse.json({ error: "La date ne peut pas être dans le passé." }, { status: 400 });
+  }
+  if (requested > maxDate) {
+    return NextResponse.json({ error: "La réservation est limitée à 7 jours à l'avance." }, { status: 400 });
+  }
+
   // Insertion dans Supabase
   const { error } = await supabase.from("reservations").insert({
     association_name,

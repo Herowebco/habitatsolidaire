@@ -17,6 +17,16 @@ const creneaux = [
   "Journée entière",
 ];
 
+function getMinDate() {
+  return new Date().toISOString().split("T")[0];
+}
+
+function getMaxDate() {
+  const d = new Date();
+  d.setDate(d.getDate() + 7);
+  return d.toISOString().split("T")[0];
+}
+
 export function CentreReservation() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -146,6 +156,8 @@ export function CentreReservation() {
                       type="date"
                       name="date_souhaitee"
                       required
+                      min={getMinDate()}
+                      max={getMaxDate()}
                       value={form.date_souhaitee}
                       onChange={handleChange}
                       className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
