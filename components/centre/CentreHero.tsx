@@ -85,8 +85,8 @@ export function CentreHero() {
         >
           <div className="relative rounded-3xl overflow-hidden aspect-[4/5] max-h-[340px] md:max-h-[500px] shadow-2xl shadow-vert-profond/20">
             <Image
-              src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=900&q=80&fit=crop"
-              alt="Centre associatif Habitat Solidaire à Masny"
+              src="/habitat-solidaire-partenaires.jpg"
+              alt="Habitat Solidaire avec Delbo Pro et le Lycée Charlotte Delbo"
               fill
               className="object-cover object-center"
               priority
@@ -105,10 +105,10 @@ export function CentreHero() {
             }}
           >
             <p className="text-xs font-semibold text-vert-sauge uppercase tracking-widest font-manrope mb-0.5">
-              Réservation disponible
+              Partenaires
             </p>
             <p className="text-sm font-bold text-anthracite font-epilogue">
-              3 espaces à disposition
+              Delbo Pro · Lycée Charlotte Delbo
             </p>
           </div>
 

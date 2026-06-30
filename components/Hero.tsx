@@ -24,10 +24,10 @@ export function Hero() {
       <div className="relative z-10 max-w-5xl 3xl:max-w-7xl mx-auto w-full px-8 3xl:px-16 grid grid-cols-1 md:grid-cols-2 gap-6 3xl:gap-20 items-center pt-24 pb-12">
 
         {/* ── Colonne gauche : texte ── */}
-        <div className="flex flex-col order-1">
+        <div className="flex flex-col order-1 items-center md:items-start text-center md:text-left">
 
           {/* Badge localisation */}
-          <div className="inline-flex self-start items-center gap-2 bg-blanc-doux/70 backdrop-blur-sm border border-vert-sauge/25 rounded-full px-5 py-2 mb-5">
+          <div className="inline-flex items-center gap-2 bg-blanc-doux/70 backdrop-blur-sm border border-vert-sauge/25 rounded-full px-5 py-2 mb-5">
             <MapPin size={12} className="text-terracotta 3xl:hidden" />
             <MapPin size={15} className="text-terracotta hidden 3xl:block" />
             <span className="text-xs 3xl:text-sm font-semibold text-vert-profond tracking-widest uppercase font-manrope">
@@ -42,17 +42,17 @@ export function Hero() {
           >
             Ici, la solidarité
             <br />
-            <span className="text-vert-profond">devient concrète.</span>
+            devient <span className="bg-terracotta/15 text-terracotta px-2 py-0.5 rounded-lg">concrète.</span>
           </h1>
 
           {/* Sous-titre */}
-          <p className="text-anthracite/75 text-lg 3xl:text-xl leading-relaxed mb-5 max-w-md 3xl:max-w-xl font-manrope">
+          <p className="text-anthracite/75 text-lg 3xl:text-xl leading-relaxed mb-5 max-w-md 3xl:max-w-xl font-manrope mx-auto md:mx-0">
             Centre associatif solidaire de 600&nbsp;m² à Masny. Nous hébergeons,
             accompagnons et mobilisons pour construire une solidarité concrète sur le territoire.
           </p>
 
           {/* Pills de réassurance */}
-          <div className="flex flex-wrap gap-3 mb-6">
+          <div className="flex flex-wrap gap-3 mb-6 justify-center md:justify-start">
             {["Partage des lieux", "Redistribution des dons", "Projets solidaires"].map((item) => (
               <div
                 key={item}
@@ -72,7 +72,7 @@ export function Hero() {
           </div>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 justify-center md:justify-start">
             <Link
               href="#nos-actions"
               className="inline-flex items-center gap-2 bg-vert-profond hover:bg-vert-profond/90 text-blanc-doux font-semibold px-8 3xl:px-10 py-4 3xl:py-5 rounded-full transition-all shadow-lg shadow-vert-profond/20 text-base 3xl:text-lg"

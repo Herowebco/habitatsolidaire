@@ -52,6 +52,13 @@ export function Promesse() {
   return (
     <section className="relative bg-blanc-doux overflow-hidden py-24 px-6">
 
+      {/* Dégradé blanc en haut */}
+      <div
+        aria-hidden="true"
+        className="absolute top-0 left-0 right-0 h-32 pointer-events-none z-10"
+        style={{ background: "linear-gradient(to bottom, #FFFDF8 0%, transparent 100%)" }}
+      />
+
       {/* ── Blobs ── */}
       <div aria-hidden="true" className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{ background: "radial-gradient(circle, rgba(104,124,104,0.25) 0%, transparent 70%)", filter: "blur(80px)" }} />

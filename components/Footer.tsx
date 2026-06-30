@@ -3,19 +3,28 @@ import { Logo } from "./Logo";
 import { Mail, MapPin, Phone } from "lucide-react";
 
 const navLinks = [
-  { label: "Le centre associatif", href: "#nos-actions" },
-  { label: "Réserver une salle", href: "#reservation" },
-  { label: "Dons & redistribution", href: "/ressourcerie" },
-  { label: "Logements rebond", href: "#logements" },
-  { label: "Ateliers solidaires", href: "#ateliers" },
-  { label: "Projets & financement", href: "#projets" },
-  { label: "Partenaires", href: "#partenaires" },
+  { label: "Accueil", href: "/" },
+  { label: "La ressourcerie", href: "/ressourcerie" },
+  { label: "Centre associatif", href: "/centre-associatif" },
+  { label: "Réserver une salle", href: "/centre-associatif#reserver" },
+  { label: "Ateliers & événements", href: "/ateliers-evenements" },
+  { label: "Projets associatifs", href: "/projets-associatifs" },
   { label: "Nous soutenir", href: "/nous-soutenir" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Footer() {
   return (
     <footer className="relative bg-anthracite text-blanc-doux/70 overflow-hidden">
+
+      {/* Ligne séparatrice dégradée */}
+      <div
+        aria-hidden="true"
+        className="absolute top-0 left-0 right-0 h-px"
+        style={{
+          background: "linear-gradient(to right, transparent 0%, rgba(104,124,104,0.8) 30%, rgba(217,130,91,0.7) 60%, transparent 100%)",
+        }}
+      />
 
       {/* Glows décoratifs */}
       <div
@@ -106,7 +115,7 @@ export function Footer() {
 
               {/* Email card */}
               <a
-                href="mailto:habitatsolidairenord@gmail.com"
+                href="/contact"
                 className="flex items-center gap-3 rounded-xl px-3.5 py-3 transition-all group"
                 style={{
                   background: "rgba(255,255,255,0.04)",
@@ -136,7 +145,7 @@ export function Footer() {
 
               {/* CTA don */}
               <a
-                href="#faire-un-don"
+                href="/nous-soutenir"
                 className="mt-2 inline-flex items-center justify-center bg-terracotta hover:bg-terracotta/90 text-blanc-doux font-semibold text-sm px-5 py-3 rounded-full transition-all font-manrope"
                 style={{ boxShadow: "0 4px 20px rgba(217,130,91,0.25)" }}
               >
@@ -150,10 +159,10 @@ export function Footer() {
         <div className="pt-6 flex flex-col md:flex-row justify-between items-center gap-3 text-xs text-blanc-doux/25 font-manrope">
           <p>© {new Date().getFullYear()} Habitat Solidaire. Tous droits réservés.</p>
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-blanc-doux/50 transition-colors">
+            <Link href="/mentions-legales" className="hover:text-blanc-doux/50 transition-colors">
               Mentions légales
             </Link>
-            <Link href="#" className="hover:text-blanc-doux/50 transition-colors">
+            <Link href="/mentions-legales#cookies" className="hover:text-blanc-doux/50 transition-colors">
               Politique de confidentialité
             </Link>
           </div>

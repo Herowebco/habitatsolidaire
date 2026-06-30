@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Urbanist, Manrope } from "next/font/google";
 import "./globals.css";
+import { CookieBanner } from "@/components/CookieBanner";
+import { BlurOverlay } from "@/components/BlurOverlay";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -30,7 +32,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${urbanist.variable} ${manrope.variable}`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <BlurOverlay />
+        <CookieBanner />
+      </body>
     </html>
   );
 }

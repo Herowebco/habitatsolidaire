@@ -3,10 +3,10 @@ import { ExternalLink, Check } from "lucide-react";
 const HELLOASSO_URL = "https://www.helloasso.com/associations/habitat-solidaire"; // À remplacer
 
 const amounts = [
-  { value: "5 €",   label: "Un café solidaire",       desc: "Aide à financer les fournitures pour nos ateliers" },
-  { value: "20 €",  label: "Un coup de main",          desc: "Contribue à la redistribution d'un lot de dons" },
-  { value: "50 €",  label: "Un vrai impact",           desc: "Permet d'accompagner une famille sur une semaine" },
-  { value: "Libre", label: "Votre montant",            desc: "Choisissez librement le montant de votre soutien" },
+  { value: "5 €",   label: "Un café solidaire" },
+  { value: "20 €",  label: "Un coup de main" },
+  { value: "50 €",  label: "Un vrai impact" },
+  { value: "Libre", label: "Votre montant" },
 ];
 
 const impacts = [
@@ -50,16 +50,15 @@ export function SoutenirDon() {
             {amounts.map((a) => (
               <div
                 key={a.value}
-                className="rounded-2xl p-5 flex flex-col gap-2"
+                className="rounded-2xl p-5 flex flex-col gap-3"
                 style={{
                   background: "linear-gradient(135deg, rgba(217,130,91,0.10) 0%, rgba(255,253,248,0.75) 100%)",
                   border: "1px solid rgba(217,130,91,0.18)",
                   boxShadow: "0 4px 16px rgba(217,130,91,0.06)",
                 }}
               >
-                <span className="font-epilogue font-extrabold text-terracotta text-2xl">{a.value}</span>
-                <span className="font-epilogue font-bold text-anthracite text-sm">{a.label}</span>
-                <span className="text-anthracite/75 text-xs font-manrope leading-relaxed">{a.desc}</span>
+                <span className="font-epilogue font-extrabold text-terracotta text-3xl">{a.value}</span>
+                <span className="font-epilogue font-bold text-anthracite text-base">{a.label}</span>
               </div>
             ))}
           </div>

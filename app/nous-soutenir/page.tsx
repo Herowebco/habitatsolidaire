@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SoutenirHero } from "@/components/soutenir/SoutenirHero";
+import { SoutenirPresident } from "@/components/soutenir/SoutenirPresident";
 import { SoutenirOptions } from "@/components/soutenir/SoutenirOptions";
 import { SoutenirDon } from "@/components/soutenir/SoutenirDon";
 import { SoutenirBenevole } from "@/components/soutenir/SoutenirBenevole";
@@ -16,6 +17,7 @@ export default function NousSoutenirPage() {
       <Navbar />
       <main>
         <SoutenirHero />
+        <SoutenirPresident />
         <SoutenirOptions />
         <SoutenirDon />
         <SoutenirBenevole />

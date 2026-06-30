@@ -1,4 +1,4 @@
-import { Heart, Users, Handshake } from "lucide-react";
+import { Heart, Users, Handshake, ArrowRight } from "lucide-react";
 
 const options = [
   {
@@ -48,9 +48,13 @@ export function SoutenirOptions() {
               <div className={`w-11 h-11 rounded-xl ${opt.color} flex items-center justify-center shadow-sm`}>
                 <Icon className="text-blanc-doux" size={19} strokeWidth={1.8} />
               </div>
-              <div>
+              <div className="flex flex-col gap-3 flex-1">
                 <h3 className="font-epilogue font-bold text-anthracite text-lg mb-1">{opt.title}</h3>
                 <p className="text-anthracite/75 text-sm font-manrope leading-relaxed">{opt.desc}</p>
+              </div>
+              <div className={`self-start inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold font-manrope text-blanc-doux transition-all ${opt.color}`}>
+                En savoir plus
+                <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
               </div>
             </a>
           );

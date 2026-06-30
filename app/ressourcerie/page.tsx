@@ -4,6 +4,7 @@ import { RessourcerieHero } from "@/components/ressourcerie/RessourcerieHero";
 import { RessourcerieQuoi } from "@/components/ressourcerie/RessourcerieQuoi";
 import { RessourcerieComment } from "@/components/ressourcerie/RessourcerieComment";
 import { RessourcerieTypes } from "@/components/ressourcerie/RessourcerieTypes";
+import { RessourcerieVideo } from "@/components/ressourcerie/RessourcerieVideo";
 import { RessourcerieCta } from "@/components/ressourcerie/RessourcerieCta";
 
 export const metadata = {
@@ -17,6 +18,7 @@ export default function RessourceriePage() {
       <Navbar />
       <main>
         <RessourcerieHero />
+        <RessourcerieVideo />
         <RessourcerieQuoi />
         <RessourcerieComment />
         <RessourcerieTypes />
