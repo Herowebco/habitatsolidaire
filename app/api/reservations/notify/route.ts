@@ -29,9 +29,14 @@ export async function POST(req: NextRequest) {
 
   const resend = new Resend(process.env.RESEND_API_KEY);
 
-  const dateFormatted = new Date(record.date_souhaitee).toLocaleDateString("fr-FR", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
-  });
+  const fmtDate = (d: string) =>
+    new Date(d).toLocaleDateString("fr-FR", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+
+  const dateDebutFmt = fmtDate(record.date_souhaitee);
+  const dateFinFmt = record.date_fin ? fmtDate(record.date_fin) : null;
+  const periodLabel = dateFinFmt && record.date_fin !== record.date_souhaitee
+    ? `Du ${dateDebutFmt} au ${dateFinFmt}`
+    : dateDebutFmt;
 
   if (record.statut === "accepte") {
     await resend.emails.send({
@@ -45,7 +50,7 @@ export async function POST(req: NextRequest) {
           <p>Bonne nouvelle ! Votre demande de réservation a été <strong style="color: #2F4537;">acceptée</strong>.</p>
           <div style="background: #F6F1E8; border-radius: 12px; padding: 16px; margin: 20px 0;">
             <p style="margin: 4px 0;"><strong>Salle :</strong> ${record.salle}</p>
-            <p style="margin: 4px 0;"><strong>Date :</strong> ${dateFormatted}</p>
+            <p style="margin: 4px 0;"><strong>Période :</strong> ${periodLabel}</p>
             <p style="margin: 4px 0;"><strong>Créneau :</strong> ${record.creneau}</p>
           </div>
           ${record.note_admin ? `<p><strong>Message de l'équipe :</strong> ${record.note_admin}</p>` : ""}
@@ -70,7 +75,7 @@ export async function POST(req: NextRequest) {
           <p>Nous n'avons malheureusement pas pu confirmer votre demande pour le créneau suivant :</p>
           <div style="background: #F6F1E8; border-radius: 12px; padding: 16px; margin: 20px 0;">
             <p style="margin: 4px 0;"><strong>Salle :</strong> ${record.salle}</p>
-            <p style="margin: 4px 0;"><strong>Date :</strong> ${dateFormatted}</p>
+            <p style="margin: 4px 0;"><strong>Période :</strong> ${periodLabel}</p>
             <p style="margin: 4px 0;"><strong>Créneau :</strong> ${record.creneau}</p>
           </div>
           ${record.note_admin ? `<p><strong>Message de l'équipe :</strong> ${record.note_admin}</p>` : ""}

@@ -12,26 +12,37 @@ const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
 export async function POST(req: NextRequest) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   const body = await req.json();
-  const { association_name, email, salle, date_souhaitee, creneau, motif } = body;
+  const { association_name, email, salle, date_souhaitee, date_fin, creneau, motif } = body;
 
   // Validation basique
-  if (!association_name || !email || !salle || !date_souhaitee || !creneau) {
+  if (!association_name || !email || !salle || !date_souhaitee || !date_fin || !creneau) {
     return NextResponse.json({ error: "Champs manquants" }, { status: 400 });
   }
 
   // Validation des dates
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const maxDate = new Date();
-  maxDate.setDate(maxDate.getDate() + 7);
-  maxDate.setHours(23, 59, 59, 999);
-  const requested = new Date(date_souhaitee);
 
-  if (requested < today) {
-    return NextResponse.json({ error: "La date ne peut pas être dans le passé." }, { status: 400 });
+  const maxStart = new Date();
+  maxStart.setDate(maxStart.getDate() + 30);
+  maxStart.setHours(23, 59, 59, 999);
+
+  const start = new Date(date_souhaitee);
+  const end = new Date(date_fin);
+
+  if (start < today) {
+    return NextResponse.json({ error: "La date de début ne peut pas être dans le passé." }, { status: 400 });
   }
-  if (requested > maxDate) {
-    return NextResponse.json({ error: "La réservation est limitée à 7 jours à l'avance." }, { status: 400 });
+  if (start > maxStart) {
+    return NextResponse.json({ error: "La réservation est limitée à 30 jours à l'avance." }, { status: 400 });
+  }
+  if (end < start) {
+    return NextResponse.json({ error: "La date de fin doit être après la date de début." }, { status: 400 });
+  }
+
+  const diffDays = Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+  if (diffDays > 7) {
+    return NextResponse.json({ error: "La durée de réservation est limitée à 7 jours maximum." }, { status: 400 });
   }
 
   // Insertion dans Supabase
@@ -40,6 +51,7 @@ export async function POST(req: NextRequest) {
     email,
     salle,
     date_souhaitee,
+    date_fin,
     creneau,
     motif: motif || null,
   });
@@ -49,10 +61,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Erreur base de données" }, { status: 500 });
   }
 
-  // Formatage de la date
-  const dateFormatted = new Date(date_souhaitee).toLocaleDateString("fr-FR", {
-    weekday: "long", year: "numeric", month: "long", day: "numeric",
-  });
+  // Formatage des dates
+  const fmtDate = (d: string) =>
+    new Date(d).toLocaleDateString("fr-FR", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+
+  const dateDebutFmt = fmtDate(date_souhaitee);
+  const dateFinFmt = fmtDate(date_fin);
+  const dureeLabel = diffDays === 0 ? "1 jour" : `${diffDays + 1} jours`;
+  const periodLabel = date_souhaitee === date_fin
+    ? dateDebutFmt
+    : `Du ${dateDebutFmt} au ${dateFinFmt} (${dureeLabel})`;
 
   // Email de confirmation au client
   await resend.emails.send({
@@ -66,7 +84,7 @@ export async function POST(req: NextRequest) {
         <p>Votre demande de réservation a bien été enregistrée. Nous l'examinerons dans les meilleurs délais et vous répondrons sous 48h.</p>
         <div style="background: #F6F1E8; border-radius: 12px; padding: 16px; margin: 20px 0;">
           <p style="margin: 4px 0;"><strong>Salle :</strong> ${salle}</p>
-          <p style="margin: 4px 0;"><strong>Date :</strong> ${dateFormatted}</p>
+          <p style="margin: 4px 0;"><strong>Période :</strong> ${periodLabel}</p>
           <p style="margin: 4px 0;"><strong>Créneau :</strong> ${creneau}</p>
           ${motif ? `<p style="margin: 4px 0;"><strong>Motif :</strong> ${motif}</p>` : ""}
         </div>
@@ -81,7 +99,7 @@ export async function POST(req: NextRequest) {
   await resend.emails.send({
     from: "Habitat Solidaire <noreply@digible.fr>",
     to: ADMIN_EMAIL,
-    subject: `Nouvelle demande de réservation — ${association_name}`,
+    subject: `Nouvelle demande de réservation - ${association_name}`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #26302A;">
         <h2 style="color: #D9825B;">Nouvelle demande de réservation</h2>
@@ -89,7 +107,7 @@ export async function POST(req: NextRequest) {
           <p style="margin: 4px 0;"><strong>Association / Nom :</strong> ${association_name}</p>
           <p style="margin: 4px 0;"><strong>Email :</strong> ${email}</p>
           <p style="margin: 4px 0;"><strong>Salle :</strong> ${salle}</p>
-          <p style="margin: 4px 0;"><strong>Date :</strong> ${dateFormatted}</p>
+          <p style="margin: 4px 0;"><strong>Période :</strong> ${periodLabel}</p>
           <p style="margin: 4px 0;"><strong>Créneau :</strong> ${creneau}</p>
           ${motif ? `<p style="margin: 4px 0;"><strong>Motif :</strong> ${motif}</p>` : ""}
         </div>

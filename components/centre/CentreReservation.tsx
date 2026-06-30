@@ -21,8 +21,15 @@ function getMinDate() {
   return new Date().toISOString().split("T")[0];
 }
 
-function getMaxDate() {
+function getMaxStartDate() {
   const d = new Date();
+  d.setDate(d.getDate() + 30);
+  return d.toISOString().split("T")[0];
+}
+
+function getMaxEndDate(startDate: string) {
+  if (!startDate) return getMaxStartDate();
+  const d = new Date(startDate);
   d.setDate(d.getDate() + 7);
   return d.toISOString().split("T")[0];
 }
@@ -37,12 +44,25 @@ export function CentreReservation() {
     email: "",
     salle: "",
     date_souhaitee: "",
+    date_fin: "",
     creneau: "",
     motif: "",
   });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm((f) => {
+      const updated = { ...f, [name]: value };
+      // Si la date de début change, réinitialise date_fin si elle devient invalide
+      if (name === "date_souhaitee" && f.date_fin) {
+        const start = new Date(value);
+        const end = new Date(f.date_fin);
+        const maxEnd = new Date(value);
+        maxEnd.setDate(maxEnd.getDate() + 7);
+        if (end < start || end > maxEnd) updated.date_fin = "";
+      }
+      return updated;
+    });
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -57,10 +77,11 @@ export function CentreReservation() {
         body: JSON.stringify(form),
       });
 
-      if (!res.ok) throw new Error("Erreur lors de l'envoi");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Erreur lors de l'envoi");
       setSent(true);
-    } catch {
-      setError("Une erreur est survenue. Veuillez réessayer ou nous contacter directement.");
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Une erreur est survenue. Veuillez réessayer ou nous contacter directement.");
     } finally {
       setLoading(false);
     }
@@ -151,31 +172,49 @@ export function CentreReservation() {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-anthracite/70 uppercase tracking-wider font-manrope">Date souhaitée</label>
+                    <label className="text-xs font-semibold text-anthracite/70 uppercase tracking-wider font-manrope">Date de début</label>
                     <input
                       type="date"
                       name="date_souhaitee"
                       required
                       min={getMinDate()}
-                      max={getMaxDate()}
+                      max={getMaxStartDate()}
                       value={form.date_souhaitee}
                       onChange={handleChange}
                       className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-anthracite/70 uppercase tracking-wider font-manrope">Créneau</label>
-                    <select
-                      name="creneau"
+                    <label className="text-xs font-semibold text-anthracite/70 uppercase tracking-wider font-manrope">Date de fin</label>
+                    <input
+                      type="date"
+                      name="date_fin"
                       required
-                      value={form.creneau}
+                      min={form.date_souhaitee || getMinDate()}
+                      max={getMaxEndDate(form.date_souhaitee)}
+                      value={form.date_fin}
                       onChange={handleChange}
-                      className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
-                    >
-                      <option value="">Choisir un créneau</option>
-                      {creneaux.map((c) => <option key={c} value={c}>{c}</option>)}
-                    </select>
+                      disabled={!form.date_souhaitee}
+                      className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    />
+                    {form.date_souhaitee && (
+                      <p className="text-xs text-anthracite/50 font-manrope">Max 7 jours</p>
+                    )}
                   </div>
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-anthracite/70 uppercase tracking-wider font-manrope">Créneau</label>
+                  <select
+                    name="creneau"
+                    required
+                    value={form.creneau}
+                    onChange={handleChange}
+                    className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
+                  >
+                    <option value="">Choisir un créneau</option>
+                    {creneaux.map((c) => <option key={c} value={c}>{c}</option>)}
+                  </select>
                 </div>
 
                 <div className="flex flex-col gap-1.5">
@@ -215,7 +254,7 @@ export function CentreReservation() {
             className="md:col-span-2 flex flex-col gap-4"
           >
             {[
-              { num: "1", label: "Demande", desc: "Choisissez une salle, une date et un créneau." },
+              { num: "1", label: "Demande", desc: "Choisissez une salle, vos dates (max 7 jours) et un créneau." },
               { num: "2", label: "Confirmation immédiate", desc: "Un email vous est envoyé automatiquement pour confirmer la réception." },
               { num: "3", label: "Validation sous 48h", desc: "L'équipe examine la demande et vous confirme la disponibilité." },
               { num: "4", label: "Votre événement", desc: "Accueil sur place le jour J. L'espace est prêt pour vous." },

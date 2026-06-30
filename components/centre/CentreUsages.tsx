@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Users, GraduationCap, CalendarCheck, Package, Heart } from "lucide-react";
+import { BorderBeam } from "@/components/BorderBeam";
 
 const usages = [
   {
@@ -50,7 +51,6 @@ export function CentreUsages() {
           </p>
         </div>
 
-        {/* Grille : 2 col + 3 col en bas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {usages.map((u, i) => {
             const Icon = u.icon;
@@ -61,7 +61,7 @@ export function CentreUsages() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="rounded-2xl p-7 flex flex-col gap-4"
+                className="relative rounded-2xl p-7 flex flex-col gap-4"
                 style={{
                   background: "linear-gradient(135deg, rgba(104,124,104,0.08) 0%, rgba(255,253,248,0.85) 100%)",
                   backdropFilter: "blur(20px)",
@@ -69,6 +69,12 @@ export function CentreUsages() {
                   boxShadow: "0 8px 32px rgba(47,69,55,0.06), inset 0 1px 0 rgba(255,255,255,0.8)",
                 }}
               >
+                <BorderBeam
+                  duration={8}
+                  delay={i * 1.2}
+                  colorFrom="rgba(104,124,104,0.7)"
+                  colorTo="rgba(217,130,91,0)"
+                />
                 <div className="w-11 h-11 rounded-xl bg-vert-sauge flex items-center justify-center shadow-sm">
                   <Icon className="text-blanc-doux" size={19} strokeWidth={1.8} />
                 </div>
