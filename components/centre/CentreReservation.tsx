@@ -139,7 +139,7 @@ export function CentreReservation() {
                       value={form.association_name}
                       onChange={handleChange}
                       placeholder="Votre association ou nom"
-                      className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
+                      className="w-full rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -151,7 +151,7 @@ export function CentreReservation() {
                       value={form.email}
                       onChange={handleChange}
                       placeholder="votre@email.fr"
-                      className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
+                      className="w-full rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
                     />
                   </div>
                 </div>
@@ -163,7 +163,7 @@ export function CentreReservation() {
                     required
                     value={form.salle}
                     onChange={handleChange}
-                    className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
+                    className="w-full rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
                   >
                     <option value="">Choisir une salle</option>
                     {salles.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -181,7 +181,7 @@ export function CentreReservation() {
                       max={getMaxStartDate()}
                       value={form.date_souhaitee}
                       onChange={handleChange}
-                      className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
+                      className="w-full rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -195,7 +195,7 @@ export function CentreReservation() {
                       value={form.date_fin}
                       onChange={handleChange}
                       disabled={!form.date_souhaitee}
-                      className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                      className="w-full rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     />
                     {form.date_souhaitee && (
                       <p className="text-xs text-anthracite/50 font-manrope">Max 7 jours</p>
@@ -210,7 +210,7 @@ export function CentreReservation() {
                     required
                     value={form.creneau}
                     onChange={handleChange}
-                    className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
+                    className="w-full rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors"
                   >
                     <option value="">Choisir un créneau</option>
                     {creneaux.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -225,7 +225,7 @@ export function CentreReservation() {
                     value={form.motif}
                     onChange={handleChange}
                     placeholder="Décrivez l'usage prévu : réunion, atelier, formation..."
-                    className="rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors resize-none"
+                    className="w-full rounded-xl px-4 py-3 text-sm font-manrope text-anthracite bg-blanc-doux border border-anthracite/10 focus:outline-none focus:border-vert-sauge/50 transition-colors resize-none"
                   />
                 </div>
 
