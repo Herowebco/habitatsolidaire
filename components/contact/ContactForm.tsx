@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Loader2 } from "lucide-react";
 
 const glassCard = {
   background: "rgba(255,253,248,0.70)",
@@ -25,10 +25,31 @@ const subjects = [
 
 export function ContactForm() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [form, setForm] = useState({ nom: "", email: "", sujet: "", message: "" });
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSent(true);
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Erreur lors de l'envoi");
+      setSent(true);
+    } catch {
+      setError("Une erreur est survenue. Contactez-nous directement par email.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -65,17 +86,17 @@ export function ContactForm() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Nom</label>
-                  <input type="text" required placeholder="Votre nom" className={inputStyle} />
+                  <input type="text" name="nom" required value={form.nom} onChange={handleChange} placeholder="Votre nom" className={inputStyle} />
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Email</label>
-                  <input type="email" required placeholder="votre@email.fr" className={inputStyle} />
+                  <input type="email" name="email" required value={form.email} onChange={handleChange} placeholder="votre@email.fr" className={inputStyle} />
                 </div>
               </div>
 
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Sujet</label>
-                <select required className={inputStyle}>
+                <select name="sujet" required value={form.sujet} onChange={handleChange} className={inputStyle}>
                   <option value="">Choisir un sujet</option>
                   {subjects.map((s) => (
                     <option key={s} value={s}>{s}</option>
@@ -86,19 +107,25 @@ export function ContactForm() {
               <div className="flex flex-col gap-1.5">
                 <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Message</label>
                 <textarea
+                  name="message"
                   required
                   rows={5}
+                  value={form.message}
+                  onChange={handleChange}
                   placeholder="Décrivez votre demande..."
                   className={`${inputStyle} resize-none`}
                 />
               </div>
 
+              {error && <p className="text-sm text-red-500 font-manrope">{error}</p>}
+
               <button
                 type="submit"
-                className="mt-2 inline-flex items-center justify-center gap-2 bg-vert-profond hover:bg-vert-profond/90 text-blanc-doux font-semibold px-8 py-4 rounded-full transition-all shadow-lg shadow-vert-profond/20 text-base font-manrope"
+                disabled={loading}
+                className="mt-2 inline-flex items-center justify-center gap-2 bg-vert-profond hover:bg-vert-profond/90 disabled:opacity-60 text-blanc-doux font-semibold px-8 py-4 rounded-full transition-all shadow-lg shadow-vert-profond/20 text-base font-manrope"
               >
-                Envoyer le message
-                <Send size={16} />
+                {loading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                {loading ? "Envoi en cours..." : "Envoyer le message"}
               </button>
             </form>
           )}
