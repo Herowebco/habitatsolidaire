@@ -65,13 +65,13 @@ function StepCard({ step, index, progress }: {
   const start = (index / steps.length) * 0.85;
   const end = ((index + 1) / steps.length) * 0.85;
   const opacity = useTransform(progress, [start, end], [0, 1]);
-  const x = useTransform(progress, [start, end], [isRight ? 40 : -40, 0]);
+  const y = useTransform(progress, [start, end], [20, 0]);
 
   return (
     <div className={`flex items-center ${isRight ? "flex-row-reverse" : "flex-row"}`}>
       <motion.div
         className={`w-full md:w-[42%] ${isRight ? "md:ml-auto" : "md:mr-auto"}`}
-        style={{ opacity, x }}
+        style={{ opacity, y }}
       >
         <div
           className="rounded-2xl p-6 flex gap-4 items-start"
