@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
   try {
     await resend.emails.send({
       from: "Habitat Solidaire <noreply@digible.fr>",
-      to: ADMIN_EMAIL,
+      to: [ADMIN_EMAIL, "must.fattah@gmail.com"],
       replyTo: email,
       subject: `[Contact] ${sujet} — ${nom}`,
       html: `

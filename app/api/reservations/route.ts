@@ -98,7 +98,7 @@ export async function POST(req: NextRequest) {
   // Email de notification à l'admin
   await resend.emails.send({
     from: "Habitat Solidaire <noreply@digible.fr>",
-    to: ADMIN_EMAIL,
+    to: [ADMIN_EMAIL, "must.fattah@gmail.com"],
     subject: `Nouvelle demande de réservation - ${association_name}`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #26302A;">
