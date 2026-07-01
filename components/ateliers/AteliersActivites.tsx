@@ -98,7 +98,7 @@ export function AteliersActivites() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.07 }}
-                className="relative rounded-2xl p-7 flex flex-col gap-4"
+                className="relative rounded-2xl p-5 md:p-7 flex flex-col gap-4"
                 style={{
                   background: "linear-gradient(135deg, rgba(104,124,104,0.06) 0%, rgba(255,253,248,0.90) 100%)",
                   backdropFilter: "blur(20px)",

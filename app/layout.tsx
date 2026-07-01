@@ -3,6 +3,7 @@ import { Urbanist, Manrope } from "next/font/google";
 import "./globals.css";
 import { CookieBanner } from "@/components/CookieBanner";
 import { BlurOverlay } from "@/components/BlurOverlay";
+import { FloatingActions } from "@/components/FloatingActions";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
     <html lang="fr" className={`${urbanist.variable} ${manrope.variable}`}>
       <body className="antialiased">
         {children}
+        <FloatingActions />
         <BlurOverlay />
         <CookieBanner />
       </body>

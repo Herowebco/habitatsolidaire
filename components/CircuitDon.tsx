@@ -153,11 +153,11 @@ export function CircuitDon() {
       <div className="relative max-w-4xl mx-auto">
 
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <span className="inline-block bg-terracotta/12 text-terracotta rounded-full px-4 py-1.5 text-xs font-semibold tracking-widest uppercase font-manrope">
             Comment ça marche
           </span>
-          <h2 className="font-epilogue font-extrabold text-anthracite mt-3 text-4xl md:text-5xl leading-tight">
+          <h2 className="font-epilogue font-extrabold text-anthracite mt-3 text-3xl md:text-5xl leading-tight">
             Un circuit du don simple,<br className="hidden md:block" /> lisible et{" "}
             <span className="bg-terracotta/15 text-terracotta px-2 py-0.5 rounded-lg">rassurant.</span>
           </h2>

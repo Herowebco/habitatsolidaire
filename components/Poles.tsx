@@ -104,7 +104,7 @@ export function Poles() {
   const Icon = large.icon;
 
   return (
-    <section id="nos-actions" className="relative bg-blanc-doux py-28 px-6 overflow-hidden">
+    <section id="nos-actions" className="relative bg-blanc-doux py-16 md:py-28 px-6 overflow-hidden">
 
       {/* ── Blobs ── */}
       <div aria-hidden="true" className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full pointer-events-none"
@@ -121,7 +121,7 @@ export function Poles() {
           <span className="inline-block bg-terracotta/12 text-terracotta rounded-full px-4 py-1.5 text-xs font-semibold tracking-widest uppercase font-manrope">
             Nos pôles d'action
           </span>
-          <h2 className="font-epilogue font-extrabold text-anthracite mt-3 text-4xl md:text-5xl leading-tight">
+          <h2 className="font-epilogue font-extrabold text-anthracite mt-3 text-3xl md:text-5xl leading-tight">
             Un lieu, six façons<br className="hidden md:block" /> d'agir{" "}
             <span className="bg-vert-profond/12 text-vert-profond px-2 py-0.5 rounded-lg">ensemble.</span>
           </h2>

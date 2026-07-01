@@ -111,7 +111,7 @@ export function CentreReservation() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="md:col-span-3 rounded-3xl p-8"
+            className="md:col-span-3 rounded-3xl p-5 md:p-8"
             style={{
               background: "rgba(255,253,248,0.70)",
               backdropFilter: "blur(20px)",

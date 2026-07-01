@@ -26,7 +26,7 @@ export function Stats() {
           <span className="inline-block bg-terracotta/12 text-terracotta rounded-full px-4 py-1.5 text-xs font-semibold tracking-widest uppercase font-manrope">
             Nos chiffres clés
           </span>
-          <h2 className="font-epilogue font-extrabold text-anthracite mt-3 text-4xl md:text-5xl leading-tight">
+          <h2 className="font-epilogue font-extrabold text-anthracite mt-3 text-3xl md:text-5xl leading-tight">
             L'impact en{" "}
             <span className="bg-terracotta/15 text-terracotta px-2 py-0.5 rounded-lg">chiffres.</span>
           </h2>
@@ -67,10 +67,10 @@ export function Stats() {
 
                 {/* Value */}
                 <div>
-                  <p className={`font-epilogue font-extrabold text-3xl md:text-4xl ${stat.color}`}>
+                  <p className={`font-epilogue font-extrabold text-2xl md:text-4xl ${stat.color}`}>
                     {stat.value}
                   </p>
-                  <p className="text-anthracite/75 text-xs md:text-sm leading-snug mt-1.5 font-manrope">
+                  <p className="text-anthracite/75 text-[11px] md:text-sm leading-snug mt-1.5 font-manrope">
                     {stat.label}
                   </p>
                 </div>

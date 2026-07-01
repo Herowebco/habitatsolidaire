@@ -115,7 +115,7 @@ export function CentreHero() {
           {/* Blob décoratif */}
           <div
             aria-hidden="true"
-            className="absolute -z-10 -top-8 -right-8 w-72 h-72 rounded-full"
+            className="absolute -z-10 -top-8 -right-8 w-40 h-40 md:w-72 md:h-72 rounded-full"
             style={{ background: "radial-gradient(circle, #687C6840 0%, transparent 70%)", filter: "blur(40px)" }}
           />
         </motion.div>

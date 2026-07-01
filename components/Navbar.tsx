@@ -84,7 +84,7 @@ export function Navbar() {
 
               {dropdownOpen && (
                 <div
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 min-w-[220px] rounded-2xl py-2 overflow-hidden"
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[220px] rounded-2xl py-2 overflow-hidden"
                   style={{
                     background: "rgba(255,253,248,0.95)",
                     backdropFilter: "blur(24px)",
