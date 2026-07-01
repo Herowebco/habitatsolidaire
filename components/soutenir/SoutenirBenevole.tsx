@@ -23,6 +23,32 @@ const glassCard = {
 
 export function SoutenirBenevole() {
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [form, setForm] = useState({ nom: "", email: "", disponibilites: "", message: "" });
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/benevole", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Erreur lors de l'envoi");
+      setSent(true);
+    } catch {
+      setError("Une erreur est survenue. Contactez-nous directement par email.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <section id="benevole" className="relative bg-creme py-20 px-6 overflow-hidden">
@@ -78,21 +104,21 @@ export function SoutenirBenevole() {
             ) : (
               <>
                 <p className="font-epilogue font-bold text-anthracite text-xl mb-5">Je souhaite m'impliquer</p>
-                <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="flex flex-col gap-4">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1.5">
                       <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Nom</label>
-                      <input type="text" required placeholder="Votre nom" className={inputStyle} />
+                      <input type="text" name="nom" required value={form.nom} onChange={handleChange} placeholder="Votre nom" className={inputStyle} />
                     </div>
                     <div className="flex flex-col gap-1.5">
                       <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Email</label>
-                      <input type="email" required placeholder="votre@email.fr" className={inputStyle} />
+                      <input type="email" name="email" required value={form.email} onChange={handleChange} placeholder="votre@email.fr" className={inputStyle} />
                     </div>
                   </div>
 
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Disponibilités</label>
-                    <select className={inputStyle}>
+                    <select name="disponibilites" value={form.disponibilites} onChange={handleChange} className={inputStyle}>
                       <option value="">Quand êtes-vous disponible ?</option>
                       <option>Semaine (journée)</option>
                       <option>Semaine (soir)</option>
@@ -103,13 +129,14 @@ export function SoutenirBenevole() {
 
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Message (optionnel)</label>
-                    <textarea rows={3} placeholder="Vos compétences, motivations..." className={`${inputStyle} resize-none`} />
+                    <textarea name="message" rows={3} value={form.message} onChange={handleChange} placeholder="Vos compétences, motivations..." className={`${inputStyle} resize-none`} />
                   </div>
 
-                  <button type="submit"
-                    className="inline-flex items-center justify-center gap-2 bg-vert-profond hover:bg-vert-profond/90 text-blanc-doux font-semibold px-8 py-4 rounded-full transition-all shadow-lg shadow-vert-profond/20 text-base font-manrope">
-                    Envoyer ma candidature
-                    <Send size={16} />
+                  {error && <p className="text-sm text-red-500 font-manrope">{error}</p>}
+
+                  <button type="submit" disabled={loading}
+                    className="inline-flex items-center justify-center gap-2 bg-vert-profond hover:bg-vert-profond/90 disabled:opacity-60 text-blanc-doux font-semibold px-8 py-4 rounded-full transition-all shadow-lg shadow-vert-profond/20 text-base font-manrope">
+                    {loading ? "Envoi en cours..." : <>Envoyer ma candidature <Send size={16} /></>}
                   </button>
                 </form>
               </>
