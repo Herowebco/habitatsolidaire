@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { ProjetsHero } from "@/components/projets/ProjetsHero";
 import { ProjetsCriteres } from "@/components/projets/ProjetsCriteres";
 import { ProjetsProcessus } from "@/components/projets/ProjetsProcessus";
-import { ProjetsCta } from "@/components/projets/ProjetsCta";
+import { ProjetsFormulaire } from "@/components/projets/ProjetsFormulaire";
 
 export const metadata = {
   title: "Projets associatifs - Habitat Solidaire",
@@ -18,7 +18,7 @@ export default function ProjetsPage() {
         <ProjetsHero />
         <ProjetsCriteres />
         <ProjetsProcessus />
-        <ProjetsCta />
+        <ProjetsFormulaire />
       </main>
       <Footer />
     </>
