@@ -111,10 +111,10 @@ export async function POST(req: NextRequest) {
           <p style="margin: 4px 0;"><strong>Créneau :</strong> ${creneau}</p>
           ${motif ? `<p style="margin: 4px 0;"><strong>Motif :</strong> ${motif}</p>` : ""}
         </div>
-        <p>Pour valider ou refuser cette demande, rendez-vous dans votre dashboard Supabase et modifiez le champ <strong>statut</strong> de la réservation.</p>
-        <a href="https://supabase.com/dashboard/project/chmzqfhzxwawgxntugnj/editor"
+        <p>Pour valider ou refuser cette demande, rendez-vous sur la page d'administration.</p>
+        <a href="https://habitat-solidaire.netlify.app/admin"
            style="display: inline-block; background: #2F4537; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; margin-top: 8px;">
-          Ouvrir Supabase
+          Ouvrir l'administration
         </a>
       </div>
     `,
