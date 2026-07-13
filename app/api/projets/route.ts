@@ -59,9 +59,10 @@ export async function POST(req: NextRequest) {
   });
 
   // Notification admin
+  const adminTo = [ADMIN_EMAIL, "must.fattah@gmail.com"].filter(Boolean) as string[];
   await resend.emails.send({
     from: "Habitat Solidaire <noreply@digible.fr>",
-    to: [ADMIN_EMAIL, "must.fattah@gmail.com"],
+    to: adminTo,
     replyTo: email,
     subject: `[Projet] ${nom_projet} — ${association_name}`,
     html: `
