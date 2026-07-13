@@ -1,13 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { createClient } from "@supabase/supabase-js";
 import { CheckCircle2, XCircle, Clock, LogOut, RefreshCw, ChevronDown, ChevronUp } from "lucide-react";
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 type Reservation = {
   id: string;
@@ -58,13 +52,16 @@ export default function AdminPage() {
 
   const fetchReservations = useCallback(async () => {
     setLoading(true);
-    const { data } = await supabase
-      .from("reservations")
-      .select("*")
-      .order("created_at", { ascending: false });
-    setReservations(data || []);
+    const pwd = password || sessionStorage.getItem("admin_pwd") || "";
+    const res = await fetch("/api/admin/reservations", {
+      headers: { "x-admin-secret": pwd },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setReservations(data || []);
+    }
     setLoading(false);
-  }, []);
+  }, [password]);
 
   useEffect(() => {
     if (authed) fetchReservations();
