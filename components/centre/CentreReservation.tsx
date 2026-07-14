@@ -99,7 +99,7 @@ export function CentreReservation() {
             <span className="bg-terracotta/15 text-terracotta px-2 py-0.5 rounded-lg">un espace.</span>
           </h2>
           <p className="text-anthracite/75 text-base font-manrope mt-4 max-w-xl mx-auto">
-            Remplissez le formulaire ci-dessous. Notre équipe confirme la disponibilité et revient vers vous rapidement.
+            Réservé aux associations adhérentes. Remplissez le formulaire ci-dessous et notre équipe confirme la disponibilité sous 48h.
           </p>
         </div>
 

@@ -6,7 +6,7 @@ import { CentreEspaces } from "@/components/centre/CentreEspaces";
 import { CentreReservation } from "@/components/centre/CentreReservation";
 
 export const metadata = {
-  title: "Le Centre associatif - Habitat Solidaire",
+  title: "L'Espace solidaire - Habitat Solidaire",
   description: "600 m² dédiés aux associations partenaires à Masny. Salles à disposition, ateliers, formations et réservation en ligne.",
 };
 

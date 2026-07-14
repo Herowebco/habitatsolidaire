@@ -30,8 +30,8 @@ const steps = [
     num: 4,
     icon: Send,
     label: "Dispatch",
-    title: "Redistribution gratuite",
-    desc: "Les ressources partent gratuitement vers les associations qui en ont besoin. Un bilan avec photos vous est envoyé pour valoriser votre geste.",
+    title: "Redistribution à moindre coût",
+    desc: "Les ressources sont proposées à prix réduit aux associations et particuliers qui en ont besoin. Les recettes sont intégralement réinvesties dans des projets associatifs locaux.",
   },
 ];
 

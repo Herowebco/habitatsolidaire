@@ -1,10 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Scissors, Monitor, Leaf, Palette, BookOpen, Users } from "lucide-react";
+import { Scissors, Monitor, Leaf, Palette, BookOpen, Users, UtensilsCrossed } from "lucide-react";
 import { BorderBeam } from "@/components/BorderBeam";
 
 const activites = [
+  {
+    icon: UtensilsCrossed,
+    titre: "Atelier cuisine solidaire",
+    desc: "Cuisinez ensemble des recettes simples, économiques et savoureuses. Un moment de partage autour de la table pour créer du lien et transmettre des savoir-faire.",
+    freq: "1 fois par mois",
+    color: "terracotta",
+  },
   {
     icon: Scissors,
     titre: "Couture & recyclage textile",

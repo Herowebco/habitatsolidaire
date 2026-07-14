@@ -162,13 +162,13 @@ export function ContactForm() {
             </div>
           </div>
 
-          {/* Centre associatif */}
+          {/* Espace solidaire */}
           <div className="rounded-2xl p-5 flex items-start gap-4" style={glassCard}>
             <div className="w-11 h-11 rounded-xl bg-vert-profond flex items-center justify-center shrink-0 shadow-sm">
               <MapPin className="text-blanc-doux" size={18} strokeWidth={1.8} />
             </div>
             <div>
-              <p className="text-xs font-semibold text-anthracite/40 uppercase tracking-widest font-manrope mb-1">Centre associatif</p>
+              <p className="text-xs font-semibold text-anthracite/40 uppercase tracking-widest font-manrope mb-1">Espace solidaire</p>
               <p className="text-sm font-medium text-anthracite font-manrope">49C rue de la Fabrique</p>
               <p className="text-sm text-anthracite/60 font-manrope">59176 Masny</p>
             </div>

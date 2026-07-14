@@ -21,7 +21,7 @@ export function ContactMap() {
           />
         </div>
         <p className="text-center text-xs text-anthracite/35 font-manrope mt-4">
-          49C rue de la Fabrique · 59176 Masny (centre associatif)
+          49C rue de la Fabrique · 59176 Masny (espace solidaire)
         </p>
       </div>
     </section>

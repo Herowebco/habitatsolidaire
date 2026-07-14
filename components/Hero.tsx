@@ -47,7 +47,7 @@ export function Hero() {
 
           {/* Sous-titre */}
           <p className="text-anthracite/75 text-lg 3xl:text-xl leading-relaxed mb-5 max-w-md 3xl:max-w-xl font-manrope mx-auto md:mx-0">
-            Centre associatif solidaire de 600&nbsp;m² à Masny. Nous hébergeons,
+            Espace solidaire de 600&nbsp;m² à Masny. Nous hébergeons,
             accompagnons et mobilisons pour construire une solidarité concrète sur le territoire.
           </p>
 

@@ -5,8 +5,8 @@ import { Mail, MapPin, Phone } from "lucide-react";
 const navLinks = [
   { label: "Accueil", href: "/" },
   { label: "La ressourcerie", href: "/ressourcerie" },
-  { label: "Centre associatif", href: "/centre-associatif" },
-  { label: "Réserver une salle", href: "/centre-associatif#reserver" },
+  { label: "Espace solidaire", href: "/espace-solidaire" },
+  { label: "Réserver une salle", href: "/espace-solidaire#reserver" },
   { label: "Ateliers & événements", href: "/ateliers-evenements" },
   { label: "Projets associatifs", href: "/projets-associatifs" },
   { label: "Nous soutenir", href: "/nous-soutenir" },
@@ -67,7 +67,7 @@ export function Footer() {
               >
                 <MapPin size={14} className="mt-0.5 shrink-0 text-vert-sauge" />
                 <div>
-                  <p className="text-[10px] text-blanc-doux/35 uppercase tracking-widest font-manrope mb-1">Centre associatif</p>
+                  <p className="text-[10px] text-blanc-doux/35 uppercase tracking-widest font-manrope mb-1">Espace solidaire</p>
                   <span className="text-xs font-manrope text-blanc-doux/70 leading-snug block">49C rue de la Fabrique, Masny</span>
                 </div>
               </div>

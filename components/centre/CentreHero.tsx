@@ -37,9 +37,9 @@ export function CentreHero() {
             className="font-epilogue font-extrabold text-anthracite leading-tight mb-5 whitespace-nowrap"
             style={{ fontSize: "clamp(1.8rem, 3.2vw, 3rem)" }}
           >
-            Le Centre{" "}
+            L'Espace{" "}
             <span className="bg-vert-profond/12 text-vert-profond px-2 py-0.5 rounded-lg">
-              associatif.
+              solidaire.
             </span>
           </h1>
           <p className="text-anthracite/75 text-lg font-manrope leading-relaxed mb-6 max-w-md">

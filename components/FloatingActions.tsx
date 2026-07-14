@@ -49,7 +49,7 @@ export function FloatingActions() {
                   <MapPin size={14} className="text-vert-sauge" />
                 </div>
                 <div>
-                  <p className="font-manrope text-xs font-semibold text-anthracite/60">Centre associatif</p>
+                  <p className="font-manrope text-xs font-semibold text-anthracite/60">Espace solidaire</p>
                   <span className="font-manrope text-xs leading-snug">49C rue de la Fabrique, 59176 Masny</span>
                 </div>
               </div>
@@ -83,7 +83,7 @@ export function FloatingActions() {
 
           {/* Réserver une salle */}
           <Link
-            href="/centre-associatif#reserver"
+            href="/espace-solidaire#reserver"
             onClick={() => setOpen(false)}
             className="flex items-center gap-3 rounded-2xl px-5 py-3.5 font-manrope font-semibold text-sm text-blanc-doux transition-all hover:opacity-90 w-[min(16rem,calc(100vw-3rem))]"
             style={{

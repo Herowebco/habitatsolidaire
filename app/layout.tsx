@@ -20,9 +20,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Habitat Solidaire - Centre associatif solidaire à Masny",
+  title: "Habitat Solidaire - Espace solidaire à Masny",
   description:
-    "Centre associatif solidaire à Masny (Hauts-de-France). Salles pour associations, dons redistribués gratuitement, ateliers solidaires et logements rebond.",
+    "Espace solidaire à Masny (Hauts-de-France). Salles pour associations, redistribution à moindre coût, ateliers solidaires et logements rebond.",
   keywords: ["habitat solidaire", "Masny", "Hauts-de-France", "association", "logement", "solidarité"],
 };
 

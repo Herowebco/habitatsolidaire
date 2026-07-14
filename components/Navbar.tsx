@@ -8,7 +8,7 @@ import { Logo } from "./Logo";
 
 const navLinks = [
   { label: "Ressourcerie", href: "/ressourcerie" },
-  { label: "Centre associatif", href: "/centre-associatif" },
+  { label: "Espace solidaire", href: "/espace-solidaire" },
   { label: "Nous soutenir", href: "/nous-soutenir" },
   { label: "Contact", href: "/contact" },
 ];
@@ -67,7 +67,7 @@ export function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1">
             <Link href="/ressourcerie" className={linkClass}>Ressourcerie</Link>
-            <Link href="/centre-associatif" className={linkClass}>Centre associatif</Link>
+            <Link href="/espace-solidaire" className={linkClass}>Espace solidaire</Link>
 
             {/* Dropdown "Nos actions" */}
             <div ref={dropdownRef} className="relative">

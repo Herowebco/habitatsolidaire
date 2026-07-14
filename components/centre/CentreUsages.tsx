@@ -47,7 +47,7 @@ export function CentreUsages() {
             </span>
           </h2>
           <p className="text-anthracite/75 text-base font-manrope mt-4 max-w-xl mx-auto">
-            Le centre associatif est un outil collectif : un espace vivant, mutualisé, utile et accessible aux partenaires.
+            L'espace solidaire est un outil collectif : un espace vivant, mutualisé, utile et accessible aux partenaires.
           </p>
         </div>
 
