@@ -4,7 +4,7 @@ const stats = [
   { icon: Handshake, value: "67",    label: "partenaires engagés sur le territoire",     color: "text-vert-profond", blob: "#2F453728" },
   { icon: Users,     value: "1 700", label: "adhérents actifs",                           color: "text-vert-sauge",   blob: "#687C6828" },
   { icon: Heart,     value: "10 000",label: "bénéficiaires accompagnés",                  color: "text-terracotta",   blob: "#D9825B28" },
-  { icon: Star,      value: "1M €",  label: "de dons reçus et redistribués gratuitement", color: "text-vert-profond", blob: "#2F453728" },
+  { icon: Star,      value: "1M €",  label: "de dons reçus et redistribués aux associations", color: "text-vert-profond", blob: "#2F453728" },
 ];
 
 export function Stats() {

@@ -6,12 +6,17 @@ const partenaires = [
   { nom: "Done", logo: "/1.png" },
   { nom: "Mairie de Masny", logo: "/2.png" },
   { nom: "Toqué comme un chef", logo: "/3.png" },
+  { nom: "Saint-Gobain", logo: "/4.png" },
+  { nom: "Kloovis", logo: "/5.png" },
+  { nom: "Dealinka", logo: "/6.png" },
+  { nom: "Heytens", logo: "/7.png" },
+  { nom: "Etex", logo: "/8.png" },
 ];
 
 const items = [...partenaires, ...partenaires, ...partenaires];
 
-const LOGO_W_MOBILE = 160;
-const LOGO_W_DESKTOP = 280;
+const LOGO_W_MOBILE = 320;
+const LOGO_W_DESKTOP = 560;
 const GAP_MOBILE = 24;
 const GAP_DESKTOP = 40;
 const TOTAL_W_MOBILE = partenaires.length * (LOGO_W_MOBILE + GAP_MOBILE);
@@ -61,7 +66,7 @@ export function Partenaires() {
               style={{ width: `${LOGO_W_MOBILE}px` }}
               title={p.nom}
             >
-              <Image src={p.logo} alt={p.nom} width={LOGO_W_MOBILE} height={64} className="object-contain h-16 w-full" />
+              <Image src={p.logo} alt={p.nom} width={LOGO_W_MOBILE} height={128} className="object-contain h-32 w-full" />
             </div>
           ))}
         </div>
@@ -87,7 +92,7 @@ export function Partenaires() {
               style={{ width: `${LOGO_W_DESKTOP}px` }}
               title={p.nom}
             >
-              <Image src={p.logo} alt={p.nom} width={LOGO_W_DESKTOP} height={96} className="object-contain h-24 w-full" />
+              <Image src={p.logo} alt={p.nom} width={LOGO_W_DESKTOP} height={192} className="object-contain h-48 w-full" />
             </div>
           ))}
         </div>

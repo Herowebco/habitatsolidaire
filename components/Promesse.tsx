@@ -108,7 +108,7 @@ export function Promesse() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
           {[
             { label: "Centraliser", desc: "Les ressources utiles au bon endroit" },
-            { label: "Redistribuer", desc: "Gratuitement aux associations partenaires" },
+            { label: "Redistribuer", desc: "À moindre coût aux associations partenaires" },
             { label: "Accompagner", desc: "Les publics fragiles vers la stabilité" },
           ].map((item) => (
             <div

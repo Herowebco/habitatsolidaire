@@ -16,8 +16,8 @@ const pillars = [
   },
   {
     icon: HeartHandshake,
-    title: "Redistribution gratuite",
-    desc: "Les ressources triées sont distribuées gratuitement aux structures partenaires. Aucun intermédiaire, aucun profit. Seulement de l'utilité.",
+    title: "Redistribution à moindre coût",
+    desc: "Les ressources triées sont proposées à prix réduit aux associations et particuliers qui en ont besoin, sur présentation de la carte d'adhésion (20€/an). Les recettes sont intégralement réinvesties dans des projets associatifs locaux.",
   },
   {
     icon: Camera,

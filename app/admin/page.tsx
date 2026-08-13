@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { CheckCircle2, XCircle, Clock, LogOut, RefreshCw, ChevronDown, ChevronUp, CalendarDays, Lightbulb } from "lucide-react";
+import Link from "next/link";
+import { CheckCircle2, XCircle, Clock, LogOut, RefreshCw, ChevronDown, ChevronUp, CalendarDays, Lightbulb, Building2, Mail, Phone, Globe, ArrowLeft } from "lucide-react";
 
 type Reservation = {
   id: string;
@@ -32,6 +33,24 @@ type Projet = {
   created_at: string;
 };
 
+type Association = {
+  id: string;
+  nom: string;
+  email: string;
+  secteur: string;
+  telephone: string | null;
+  site_web: string | null;
+  description: string;
+  created_at: string;
+};
+
+// Démo — sera remplacé par les vraies inscriptions une fois le backend association branché
+const MOCK_ASSOCIATIONS: Association[] = [
+  { id: "1", nom: "Toqué comme un chef", email: "contact@toquecommeunchef.fr", secteur: "Éducation & insertion", telephone: "03 27 XX XX XX", site_web: null, description: "Ateliers cuisine et insertion par l'apprentissage culinaire.", created_at: "2026-05-12T10:00:00Z" },
+  { id: "2", nom: "Les Amis du Quartier", email: "contact@amisduquartier.fr", secteur: "Social & solidarité", telephone: null, site_web: "https://amisduquartier.fr", description: "Animation de quartier et lien social intergénérationnel.", created_at: "2026-06-03T09:30:00Z" },
+  { id: "3", nom: "Fil & Aiguille Solidaire", email: "filaiguille@asso-masny.fr", secteur: "Culture & loisirs", telephone: "06 XX XX XX XX", site_web: null, description: "Couture, recyclage textile et transmission de savoir-faire.", created_at: "2026-07-01T14:15:00Z" },
+];
+
 const STATUS_LABELS: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
   en_attente: { label: "En attente", color: "text-amber-600 bg-amber-50 border-amber-200", icon: <Clock size={12} /> },
   accepte: { label: "Accepté", color: "text-green-700 bg-green-50 border-green-200", icon: <CheckCircle2 size={12} /> },
@@ -56,7 +75,11 @@ export default function AdminPage() {
   const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState("");
   const [authLoading, setAuthLoading] = useState(false);
-  const [tab, setTab] = useState<"reservations" | "projets">("reservations");
+  const [tab, setTab] = useState<"reservations" | "projets" | "associations">("reservations");
+
+  // Associations (démo front-only)
+  const [associations] = useState<Association[]>(MOCK_ASSOCIATIONS);
+  const [assoExpanded, setAssoExpanded] = useState<string | null>(null);
 
   // Réservations
   const [reservations, setReservations] = useState<Reservation[]>([]);
@@ -180,6 +203,9 @@ export default function AdminPage() {
       <div className="min-h-screen bg-creme flex items-center justify-center px-4">
         <div className="w-full max-w-sm rounded-3xl p-8"
           style={{ background: "rgba(255,253,248,0.90)", backdropFilter: "blur(24px)", border: "1px solid rgba(255,255,255,0.70)", boxShadow: "0 8px 40px rgba(47,69,55,0.10)" }}>
+          <Link href="/" className="inline-flex items-center gap-1.5 text-anthracite/40 hover:text-anthracite/70 text-xs font-manrope font-semibold mb-6 transition-colors">
+            <ArrowLeft size={13} /> Retour au site
+          </Link>
           <div className="w-12 h-12 rounded-2xl bg-vert-profond flex items-center justify-center mb-6">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
           </div>
@@ -227,6 +253,11 @@ export default function AdminPage() {
                 <Lightbulb size={13} /> Projets
                 {projetCounts.en_attente > 0 && <span className="w-4 h-4 rounded-full bg-terracotta text-blanc-doux text-[10px] flex items-center justify-center">{projetCounts.en_attente}</span>}
               </button>
+              <button onClick={() => setTab("associations")}
+                className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-manrope font-semibold transition-all ${tab === "associations" ? "bg-blanc-doux text-anthracite shadow-sm" : "text-anthracite/50 hover:text-anthracite"}`}>
+                <Building2 size={13} /> Associations
+                <span className="w-4 h-4 rounded-full bg-anthracite/10 text-anthracite/60 text-[10px] flex items-center justify-center">{associations.length}</span>
+              </button>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -247,6 +278,9 @@ export default function AdminPage() {
           </button>
           <button onClick={() => setTab("projets")} className={`flex-1 py-2.5 text-sm font-manrope font-semibold transition-colors ${tab === "projets" ? "text-vert-profond border-b-2 border-vert-profond" : "text-anthracite/40"}`}>
             Projets {projetCounts.en_attente > 0 && `(${projetCounts.en_attente})`}
+          </button>
+          <button onClick={() => setTab("associations")} className={`flex-1 py-2.5 text-sm font-manrope font-semibold transition-colors ${tab === "associations" ? "text-vert-profond border-b-2 border-vert-profond" : "text-anthracite/40"}`}>
+            Associations ({associations.length})
           </button>
         </div>
       </div>
@@ -390,6 +424,57 @@ export default function AdminPage() {
                               </div>
                             </div>
                           )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </>
+        )}
+
+        {/* ── ASSOCIATIONS ── */}
+        {tab === "associations" && (
+          <>
+            <p className="text-anthracite/40 font-manrope text-xs mb-6">
+              Associations inscrites sur l&apos;espace association — {associations.length} au total.
+            </p>
+
+            {associations.length === 0 ? (
+              <div className="text-center py-20 text-anthracite/40 font-manrope text-sm">Aucune association inscrite</div>
+            ) : (
+              <div className="flex flex-col gap-3">
+                {associations.map(a => {
+                  const isExpanded = assoExpanded === a.id;
+                  return (
+                    <div key={a.id} className="rounded-2xl overflow-hidden" style={cardStyle}>
+                      <div className="p-5 flex items-center gap-4 cursor-pointer" onClick={() => setAssoExpanded(isExpanded ? null : a.id)}>
+                        <div className="w-10 h-10 rounded-xl bg-vert-sauge/12 flex items-center justify-center shrink-0">
+                          <Building2 size={17} className="text-vert-sauge" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap mb-1">
+                            <p className="font-epilogue font-bold text-anthracite text-sm">{a.nom}</p>
+                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border font-manrope text-vert-sauge bg-vert-sauge/8 border-vert-sauge/20">
+                              {a.secteur}
+                            </span>
+                          </div>
+                          <p className="text-anthracite/50 font-manrope text-xs">{a.email}</p>
+                        </div>
+                        <div className="flex items-center gap-3 shrink-0">
+                          <p className="text-anthracite/30 font-manrope text-xs hidden sm:block">Inscrite le {fmtDate(a.created_at)}</p>
+                          {isExpanded ? <ChevronUp size={16} className="text-anthracite/40" /> : <ChevronDown size={16} className="text-anthracite/40" />}
+                        </div>
+                      </div>
+                      {isExpanded && (
+                        <div className="px-5 pb-5 border-t border-anthracite/6 pt-4 flex flex-col gap-3">
+                          <p className="text-sm text-anthracite/75 font-manrope leading-relaxed">{a.description}</p>
+                          <div className="flex flex-wrap gap-4 text-xs text-anthracite/55 font-manrope">
+                            <span className="flex items-center gap-1.5"><Mail size={12} className="text-vert-sauge" />{a.email}</span>
+                            {a.telephone && <span className="flex items-center gap-1.5"><Phone size={12} className="text-terracotta" />{a.telephone}</span>}
+                            {a.site_web && <span className="flex items-center gap-1.5"><Globe size={12} className="text-anthracite/40" />{a.site_web}</span>}
+                          </div>
                         </div>
                       )}
                     </div>

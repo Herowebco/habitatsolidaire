@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { clsx } from "clsx";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, User } from "lucide-react";
 import { Logo } from "./Logo";
 
 const navLinks = [
@@ -111,7 +111,14 @@ export function Navbar() {
           </nav>
 
           {/* CTA */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center gap-2">
+            <Link
+              href="/connexion"
+              className={linkClass}
+              aria-label="Espace connexion"
+            >
+              <User size={16} />
+            </Link>
             <Link
               href="/nous-soutenir"
               className="bg-terracotta hover:bg-terracotta/90 text-blanc-doux text-sm font-semibold px-5 py-2 rounded-full transition-all shadow-sm whitespace-nowrap"
@@ -158,6 +165,14 @@ export function Navbar() {
                 </Link>
               ))}
             </div>
+
+            <Link
+              href="/connexion"
+              onClick={() => setMenuOpen(false)}
+              className="text-sm font-medium text-anthracite/70 py-2 px-2 rounded-xl hover:bg-anthracite/5 transition-colors mt-1"
+            >
+              Espace association / Administration
+            </Link>
 
             <Link
               href="/nous-soutenir"

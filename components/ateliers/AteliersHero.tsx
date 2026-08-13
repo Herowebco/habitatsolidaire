@@ -83,31 +83,33 @@ export function AteliersHero() {
 
           {/* Photo droite */}
           <motion.div
-            initial={{ opacity: 0, x: 24 }}
+            initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl"
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="relative"
           >
-            <Image
-              src="https://images.unsplash.com/photo-1529390079861-591de354faf5?w=800&q=80"
-              alt="Atelier collectif Habitat Solidaire"
-              fill
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-anthracite/40 via-transparent to-transparent" />
+            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] max-h-[340px] md:max-h-[500px] shadow-2xl">
+              <Image
+                src="/image.png"
+                alt="Atelier cuisine solidaire avec Toqué comme un chef"
+                fill
+                className="object-cover"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-anthracite/40 via-transparent to-transparent" />
 
-            {/* Floating card */}
-            <div
-              className="absolute bottom-5 left-5 right-5 rounded-2xl px-5 py-4"
-              style={{
-                background: "rgba(255,253,248,0.80)",
-                backdropFilter: "blur(20px)",
-                border: "1px solid rgba(255,255,255,0.70)",
-              }}
-            >
-              <p className="font-epilogue font-bold text-anthracite text-sm">Ateliers réguliers</p>
-              <p className="text-anthracite/60 text-xs font-manrope mt-0.5">Couture, numérique, jardinage et bien plus</p>
+              {/* Floating card */}
+              <div
+                className="absolute bottom-5 left-5 right-5 rounded-2xl px-5 py-4"
+                style={{
+                  background: "rgba(255,253,248,0.80)",
+                  backdropFilter: "blur(20px)",
+                  border: "1px solid rgba(255,255,255,0.70)",
+                }}
+              >
+                <p className="font-epilogue font-bold text-anthracite text-sm">Ateliers réguliers</p>
+                <p className="text-anthracite/60 text-xs font-manrope mt-0.5">Couture, numérique, jardinage et bien plus</p>
+              </div>
             </div>
           </motion.div>
         </div>

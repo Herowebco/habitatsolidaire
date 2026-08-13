@@ -17,7 +17,7 @@ export function RessourcerieVideo() {
             <span className="bg-terracotta/15 text-terracotta px-2 py-0.5 rounded-lg">en action.</span>
           </h2>
           <p className="text-anthracite/70 font-manrope max-w-xl mx-auto">
-            Comment vos dons sont réceptionnés, triés et redistribués gratuitement aux associations du territoire.
+            Comment vos dons sont réceptionnés, triés et redistribués à moindre coût aux associations du territoire.
           </p>
           <p className="text-anthracite/45 font-manrope text-sm mt-2">
             Vidéo réalisée par notre partenaire{" "}

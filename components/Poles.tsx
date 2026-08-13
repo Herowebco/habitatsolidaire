@@ -38,7 +38,7 @@ const poles = [
     icon: Package,
     label: "Pôle 3",
     title: "Gros lots de dons",
-    description: "Réception, tri et dispatch gratuit aux associations partenaires selon les besoins du territoire.",
+    description: "Réception, tri et dispatch à moindre coût aux associations partenaires selon les besoins du territoire.",
     href: "/ressourcerie",
     gradient: "from-terracotta/20 to-terracotta/5",
     iconBg: "bg-terracotta",
@@ -130,7 +130,7 @@ export function Poles() {
         {/* ── Bento grid ── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 auto-rows-auto">
 
-          {/* Grande carte — Centre associatif */}
+          {/* Grande carte — Espace solidaire */}
           <div
             className="group relative rounded-3xl p-7 flex flex-col gap-5 overflow-hidden transition-all duration-300 hover:-translate-y-1 md:col-span-2 md:row-span-2"
             style={glassStyle}

@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Handshake, Lightbulb } from "lucide-react";
 import Image from "next/image";
+import { Home, ShieldCheck } from "lucide-react";
 
-export function ProjetsHero() {
+export function LogementsHero() {
   return (
     <section className="relative pt-28 pb-16 px-6 overflow-hidden">
       <div
@@ -22,26 +22,27 @@ export function ProjetsHero() {
       <div className="relative max-w-5xl mx-auto w-full">
         <div className="grid md:grid-cols-2 gap-12 items-center">
 
+          {/* Texte gauche */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-block bg-vert-sauge/12 text-vert-sauge rounded-full px-4 py-1.5 text-xs font-semibold tracking-widest uppercase font-manrope mb-4">
-              Soutien aux projets
+            <span className="inline-block bg-vert-profond/12 text-vert-profond rounded-full px-4 py-1.5 text-xs font-semibold tracking-widest uppercase font-manrope mb-4">
+              Hébergement solidaire
             </span>
             <h1
               className="font-epilogue font-extrabold text-anthracite leading-tight mb-5"
               style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
             >
-              Votre projet,<br />
-              <span className="bg-vert-sauge/15 text-vert-sauge px-2 py-0.5 rounded-lg">
-                notre soutien.
+              Se poser,{" "}
+              <span className="bg-vert-profond/12 text-vert-profond px-2 py-0.5 rounded-lg">
+                repartir.
               </span>
             </h1>
             <p className="text-anthracite/75 text-lg font-manrope leading-relaxed mb-8 max-w-md">
-              Habitat Solidaire accompagne les associations et structures partenaires
-              qui souhaitent lancer des actions concrètes sur le territoire, même avec peu de moyens.
+              Des logements temporaires, dignes et sécurisés pour les publics fragiles,
+              avec un accompagnement social vers un projet de vie stable.
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -57,8 +58,8 @@ export function ProjetsHero() {
                   boxShadow: "0 4px 20px rgba(47,69,55,0.08), inset 0 1px 0 rgba(255,255,255,0.8)",
                 }}
               >
-                <Handshake size={15} className="text-vert-sauge shrink-0" />
-                <span className="font-semibold">Accompagnement & financement</span>
+                <Home size={15} className="text-vert-profond shrink-0" />
+                <span className="font-semibold">Logement temporaire</span>
               </motion.div>
 
               <motion.div
@@ -73,12 +74,13 @@ export function ProjetsHero() {
                   boxShadow: "0 4px 20px rgba(47,69,55,0.08), inset 0 1px 0 rgba(255,255,255,0.8)",
                 }}
               >
-                <Lightbulb size={15} className="text-terracotta shrink-0" />
-                <span className="font-semibold">Ouvert à toutes les associations</span>
+                <ShieldCheck size={15} className="text-terracotta shrink-0" />
+                <span className="font-semibold">Accompagnement social</span>
               </motion.div>
             </div>
           </motion.div>
 
+          {/* Photo droite */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -87,24 +89,13 @@ export function ProjetsHero() {
           >
             <div className="relative rounded-3xl overflow-hidden aspect-[4/5] max-h-[340px] md:max-h-[500px] shadow-2xl">
               <Image
-                src="/habitat-solidaire-maire-masny.jpg"
-                alt="Habitat Solidaire avec le Maire de Masny"
+                src="/logement-rebond.webp"
+                alt="Logements rebond Habitat Solidaire à Masny"
                 fill
-                className="object-cover object-top"
+                className="object-cover"
                 priority
               />
               <div className="absolute inset-0 bg-gradient-to-t from-anthracite/40 via-transparent to-transparent" />
-              <div
-                className="absolute bottom-5 left-5 right-5 rounded-2xl px-5 py-4"
-                style={{
-                  background: "rgba(255,253,248,0.80)",
-                  backdropFilter: "blur(20px)",
-                  border: "1px solid rgba(255,255,255,0.70)",
-                }}
-              >
-                <p className="font-epilogue font-bold text-anthracite text-sm">Soutenu par la Mairie de Masny</p>
-                <p className="text-anthracite/60 text-xs font-manrope mt-0.5">Partenaire institutionnel depuis la création</p>
-              </div>
             </div>
           </motion.div>
         </div>

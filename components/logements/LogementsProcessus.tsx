@@ -2,36 +2,36 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Phone, Package2, SlidersHorizontal, Send } from "lucide-react";
+import { Users, ClipboardList, KeyRound, Compass } from "lucide-react";
 
 const steps = [
   {
     num: 1,
-    icon: Phone,
-    label: "Contact",
-    title: "Vous nous signalez un lot",
-    desc: "Vous disposez d'un stock de matériel, de surplus ou d'invendus ? Contactez-nous par téléphone ou email pour nous décrire votre don.",
+    icon: Users,
+    label: "Orientation",
+    title: "Un partenaire nous signale une situation",
+    desc: "Travailleur social, structure partenaire ou service institutionnel nous contacte pour présenter la situation.",
   },
   {
     num: 2,
-    icon: Package2,
-    label: "Réception",
-    title: "Livraison à la ressourcerie",
-    desc: "Nous organisons la réception du lot au 105 Avenue du 8 Mai 1945, Masny. Possibilité de collecte pour les grands volumes.",
+    icon: ClipboardList,
+    label: "Évaluation",
+    title: "Étude de la demande",
+    desc: "Notre équipe évalue la situation et la disponibilité des logements pour proposer une solution adaptée.",
   },
   {
     num: 3,
-    icon: SlidersHorizontal,
-    label: "Tri",
-    title: "Contrôle & organisation",
-    desc: "L'équipe trie, contrôle et range chaque article. Les ressources sont préparées selon les besoins remontés par les associations partenaires.",
+    icon: KeyRound,
+    label: "Accueil",
+    title: "Attribution du logement",
+    desc: "La personne ou la famille est accueillie dans un logement temporaire, digne et sécurisé.",
   },
   {
     num: 4,
-    icon: Send,
-    label: "Dispatch",
-    title: "Redistribution à moindre coût",
-    desc: "Les ressources sont proposées à prix réduit aux associations et particuliers qui en ont besoin, avec une carte d'adhésion annuelle à 20€. Les recettes sont intégralement réinvesties dans des projets associatifs locaux.",
+    icon: Compass,
+    label: "Accompagnement",
+    title: "Vers un projet de vie",
+    desc: "Un suivi régulier accompagne la personne dans ses démarches jusqu'à une solution de sortie stable.",
   },
 ];
 
@@ -47,7 +47,7 @@ function StepDot({ index, total, progress }: {
   );
   return (
     <motion.div
-      className="w-8 h-8 rounded-full bg-terracotta flex items-center justify-center shadow-md"
+      className="w-8 h-8 rounded-full bg-vert-profond flex items-center justify-center shadow-md"
       style={{ opacity }}
     >
       <span className="text-blanc-doux text-xs font-bold font-epilogue">{index + 1}</span>
@@ -76,17 +76,17 @@ function StepCard({ step, index, progress }: {
         <div
           className="rounded-2xl p-6 flex gap-4 items-start"
           style={{
-            background: "linear-gradient(135deg, rgba(217,130,91,0.10) 0%, rgba(255,253,248,0.75) 100%)",
+            background: "linear-gradient(135deg, rgba(104,124,104,0.10) 0%, rgba(255,253,248,0.75) 100%)",
             backdropFilter: "blur(20px)",
-            border: "1px solid rgba(217,130,91,0.18)",
+            border: "1px solid rgba(104,124,104,0.18)",
             boxShadow: "0 8px 32px rgba(47,69,55,0.07), inset 0 1px 0 rgba(255,255,255,0.8)",
           }}
         >
-          <div className="shrink-0 w-12 h-12 rounded-xl bg-terracotta flex items-center justify-center shadow-sm">
+          <div className="shrink-0 w-12 h-12 rounded-xl bg-vert-profond flex items-center justify-center shadow-sm">
             <Icon className="text-blanc-doux" size={20} strokeWidth={1.8} />
           </div>
           <div>
-            <span className="inline-block bg-terracotta/10 text-terracotta/70 rounded-full px-3 py-1 text-[10px] font-semibold tracking-widest uppercase font-manrope">
+            <span className="inline-block bg-vert-profond/10 text-vert-profond/80 rounded-full px-3 py-1 text-[10px] font-semibold tracking-widest uppercase font-manrope">
               {step.label}
             </span>
             <h3 className="font-epilogue font-bold text-anthracite text-lg mt-0.5 mb-1.5">
@@ -103,7 +103,7 @@ function StepCard({ step, index, progress }: {
   );
 }
 
-export function RessourcerieComment() {
+export function LogementsProcessus() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -111,30 +111,18 @@ export function RessourcerieComment() {
   });
 
   return (
-    <section className="relative py-24 px-6 overflow-hidden">
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url('/hero-section.svg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 bg-blanc-doux/55" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-blanc-doux to-transparent" />
-      </div>
-
+    <section className="relative py-24 px-6 overflow-hidden" style={{ background: "rgba(104,124,104,0.04)" }}>
       <div className="relative max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <span className="inline-block bg-terracotta/12 text-terracotta rounded-full px-4 py-1.5 text-xs font-semibold tracking-widest uppercase font-manrope">
-            Comment proposer un don
+          <span className="inline-block bg-vert-profond/12 text-vert-profond rounded-full px-4 py-1.5 text-xs font-semibold tracking-widest uppercase font-manrope">
+            Comment ça marche
           </span>
           <h2 className="font-epilogue font-extrabold text-anthracite mt-3 text-4xl md:text-5xl leading-tight">
-            Un processus simple,{" "}
-            <span className="bg-terracotta/15 text-terracotta px-2 py-0.5 rounded-lg">en 4 étapes.</span>
+            Un parcours{" "}
+            <span className="bg-vert-profond/15 text-vert-profond px-2 py-0.5 rounded-lg">en 4 étapes.</span>
           </h2>
           <p className="text-anthracite/75 text-lg font-manrope mt-4 max-w-xl mx-auto">
-            Du premier contact jusqu'au bilan d'impact, chaque étape est suivie et valorisée.
+            De l'orientation jusqu'à la sortie, chaque étape est suivie par notre équipe.
           </p>
         </div>
 
@@ -142,7 +130,7 @@ export function RessourcerieComment() {
           <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-anthracite/10" />
           <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 w-px overflow-hidden" style={{ bottom: 0 }}>
             <motion.div
-              className="w-full bg-terracotta origin-top"
+              className="w-full bg-vert-profond origin-top"
               style={{ scaleY: scrollYProgress, transformOrigin: "top", height: "100%" }}
             />
           </div>

@@ -32,8 +32,8 @@ const steps = [
   {
     num: 4,
     icon: Handshake,
-    title: "Redistribution gratuite",
-    desc: "Dispatch gratuit aux associations selon les besoins du territoire.",
+    title: "Redistribution à moindre coût",
+    desc: "Dispatch à prix réduit aux associations, recettes réinvesties dans des projets locaux.",
     color: "bg-terracotta",
     light: false,
   },

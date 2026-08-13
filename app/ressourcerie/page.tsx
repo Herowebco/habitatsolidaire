@@ -9,7 +9,7 @@ import { RessourcerieCta } from "@/components/ressourcerie/RessourcerieCta";
 
 export const metadata = {
   title: "La Ressourcerie - Habitat Solidaire",
-  description: "Réception, tri et redistribution gratuite de dons aux associations partenaires à Masny.",
+  description: "Réception, tri et redistribution à moindre coût de dons aux associations partenaires à Masny.",
 };
 
 export default function RessourceriePage() {
