@@ -5,9 +5,9 @@ import { CalendarDays, Clock, MapPin } from "lucide-react";
 
 const evenements = [
   {
-    date: "Juillet 2026",
+    date: "Mai 2026",
     jour: "12",
-    mois: "Juil.",
+    mois: "Mai",
     titre: "Portes ouvertes de la ressourcerie",
     desc: "Venez découvrir les coulisses de la ressourcerie solidaire : tri, stockage et redistribution des dons. Visite guidée et échanges avec l'équipe.",
     heure: "10h - 16h",
@@ -16,9 +16,9 @@ const evenements = [
     color: "terracotta",
   },
   {
-    date: "Juillet 2026",
+    date: "Juin 2026",
     jour: "19",
-    mois: "Juil.",
+    mois: "Juin",
     titre: "Atelier couture spécial été",
     desc: "Session intensive de couture créative : transformation de vêtements, personnalisation et upcycling. Matériel fourni, accessible à tous niveaux.",
     heure: "14h - 17h",
@@ -27,9 +27,9 @@ const evenements = [
     color: "vert-sauge",
   },
   {
-    date: "Août 2026",
+    date: "Juillet 2026",
     jour: "23",
-    mois: "Août",
+    mois: "Juil.",
     titre: "Fête de quartier solidaire",
     desc: "Un moment festif ouvert à tout le quartier avec animations, stands associatifs, musique et repas partagé. Entrée libre, venez nombreux !",
     heure: "15h - 22h",
@@ -38,9 +38,9 @@ const evenements = [
     color: "terracotta",
   },
   {
-    date: "Septembre 2026",
+    date: "Août 2026",
     jour: "06",
-    mois: "Sept.",
+    mois: "Août",
     titre: "Rentrée des ateliers 2026-2027",
     desc: "Reprise de tous les ateliers hebdomadaires avec de nouvelles sessions et de nouveaux intervenants. Inscription libre sur place.",
     heure: "9h - 17h",
@@ -71,13 +71,13 @@ export function AteliersAgenda() {
             Agenda
           </span>
           <h2 className="font-epilogue font-extrabold text-anthracite mt-3 text-3xl md:text-4xl leading-tight">
-            Prochains{" "}
+            Nos derniers{" "}
             <span className="bg-terracotta/15 text-terracotta px-2 py-0.5 rounded-lg">
               événements.
             </span>
           </h2>
           <p className="text-anthracite/75 text-base font-manrope mt-4 max-w-xl mx-auto">
-            Tous nos événements sont gratuits et ouverts à toutes et tous. Pas besoin de s'inscrire, il suffit de venir.
+            Tous nos événements sont gratuits et ouverts à toutes et tous — pas besoin de s'inscrire, il suffit de venir.
           </p>
         </div>
 

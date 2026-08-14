@@ -5,7 +5,7 @@ import { StarBorderButton } from "./StarBorderButton";
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen overflow-hidden flex items-center">
+    <section className="relative overflow-hidden flex items-center md:min-h-screen">
 
       {/* ── Background SVG ── */}
       <div
@@ -21,13 +21,13 @@ export function Hero() {
       </div>
 
       {/* ── Grid 2 colonnes ── */}
-      <div className="relative z-10 max-w-5xl 3xl:max-w-7xl mx-auto w-full px-8 3xl:px-16 grid grid-cols-1 md:grid-cols-2 gap-6 3xl:gap-20 items-center pt-24 pb-12">
+      <div className="relative z-10 max-w-5xl 3xl:max-w-7xl mx-auto w-full px-6 md:px-8 3xl:px-16 grid grid-cols-1 md:grid-cols-2 gap-6 3xl:gap-20 items-center pt-24 pb-8 md:pt-24 md:pb-12">
 
         {/* ── Colonne gauche : texte ── */}
         <div className="flex flex-col order-1 items-center md:items-start text-center md:text-left">
 
           {/* Badge localisation */}
-          <div className="inline-flex items-center gap-2 bg-blanc-doux/70 backdrop-blur-sm border border-vert-sauge/25 rounded-full px-5 py-2 mb-5">
+          <div className="inline-flex items-center gap-2 bg-blanc-doux/70 backdrop-blur-sm border border-vert-sauge/25 rounded-full px-5 py-2 mb-3 md:mb-5">
             <MapPin size={12} className="text-terracotta 3xl:hidden" />
             <MapPin size={15} className="text-terracotta hidden 3xl:block" />
             <span className="text-xs 3xl:text-sm font-semibold text-vert-profond tracking-widest uppercase font-manrope">
@@ -37,7 +37,7 @@ export function Hero() {
 
           {/* Headline */}
           <h1
-            className="font-epilogue font-extrabold text-anthracite leading-[1.05] mb-4 tracking-tight"
+            className="font-epilogue font-extrabold text-anthracite leading-[1.05] mb-3 md:mb-4 tracking-tight"
             style={{ fontSize: "clamp(2rem, 3.8vw, 3.4rem)" }}
           >
             Ici, la solidarité
@@ -46,17 +46,17 @@ export function Hero() {
           </h1>
 
           {/* Sous-titre */}
-          <p className="text-anthracite/75 text-lg 3xl:text-xl leading-relaxed mb-5 max-w-md 3xl:max-w-xl font-manrope mx-auto md:mx-0">
+          <p className="text-anthracite/75 text-base md:text-lg 3xl:text-xl leading-relaxed mb-4 md:mb-5 max-w-md 3xl:max-w-xl font-manrope mx-auto md:mx-0">
             Espace solidaire de 600&nbsp;m² à Masny. Nous hébergeons,
             accompagnons et mobilisons pour construire une solidarité concrète sur le territoire.
           </p>
 
           {/* Pills de réassurance */}
-          <div className="flex flex-wrap gap-3 mb-6 justify-center md:justify-start">
-            {["Partage des lieux", "Redistribution des dons", "Projets solidaires"].map((item) => (
+          <div className="flex flex-wrap gap-2 md:gap-3 mb-5 md:mb-6 justify-center md:justify-start">
+            {["Partage des lieux", "Redistribution des dons", "Projets solidaires"].map((item, i) => (
               <div
                 key={item}
-                className="inline-flex items-center gap-2 rounded-full px-4 3xl:px-5 py-2"
+                className={`inline-flex items-center gap-2 rounded-full px-3.5 md:px-4 3xl:px-5 py-1.5 md:py-2 ${i === 2 ? "hidden sm:inline-flex" : ""}`}
                 style={{
                   background: "rgba(255,253,248,0.55)",
                   backdropFilter: "blur(16px) saturate(180%)",
@@ -65,23 +65,23 @@ export function Hero() {
                   boxShadow: "0 4px 16px rgba(47,69,55,0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
                 }}
               >
-                <Check size={13} className="text-vert-sauge" />
-                <span className="text-sm 3xl:text-base font-medium text-anthracite/80 font-manrope">{item}</span>
+                <Check size={13} className="text-vert-sauge shrink-0" />
+                <span className="text-xs md:text-sm 3xl:text-base font-medium text-anthracite/80 font-manrope">{item}</span>
               </div>
             ))}
           </div>
 
           {/* CTAs */}
-          <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto justify-center md:justify-start">
             <Link
               href="#nos-actions"
-              className="inline-flex items-center gap-2 bg-vert-profond hover:bg-vert-profond/90 text-blanc-doux font-semibold px-8 3xl:px-10 py-4 3xl:py-5 rounded-full transition-all shadow-lg shadow-vert-profond/20 text-base 3xl:text-lg"
+              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-vert-profond hover:bg-vert-profond/90 text-blanc-doux font-semibold px-8 3xl:px-10 py-3.5 md:py-4 3xl:py-5 rounded-full transition-all shadow-lg shadow-vert-profond/20 text-base 3xl:text-lg"
             >
               Découvrir nos actions
               <ArrowRight size={16} className="3xl:hidden" />
               <ArrowRight size={20} className="hidden 3xl:block" />
             </Link>
-            <StarBorderButton href="#faire-un-don">
+            <StarBorderButton href="#faire-un-don" className="w-full sm:w-auto justify-center">
               Faire un don
             </StarBorderButton>
           </div>
