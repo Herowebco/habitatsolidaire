@@ -135,9 +135,6 @@ export default function ConnexionPage() {
                 {loading ? "Connexion..." : "Accéder à mon espace"}
               </button>
 
-              <p className="text-anthracite/35 font-manrope text-[11px] text-center mt-1">
-                Version de démonstration — tout identifiant fonctionne.
-              </p>
             </form>
           </>
         )}
