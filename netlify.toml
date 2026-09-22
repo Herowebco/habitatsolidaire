@@ -1,0 +1,3 @@
+# Fonctions Netlify (dont la fonction planifiée keep-supabase-alive)
+[functions]
+  directory = "netlify/functions"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Mail, Phone, MapPin, Send, Loader2 } from "lucide-react";
 
 const glassCard = {
@@ -28,6 +28,11 @@ export function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({ nom: "", email: "", sujet: "", message: "" });
+  const [website, setWebsite] = useState(""); // honeypot anti-bot : doit rester vide
+  const startedAt = useRef(0);
+  useEffect(() => {
+    startedAt.current = Date.now(); // heure d'affichage du formulaire (contrôle anti-bot)
+  }, []);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -41,7 +46,7 @@ export function ContactForm() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, website, startedAt: startedAt.current }),
       });
       if (!res.ok) throw new Error("Erreur lors de l'envoi");
       setSent(true);
@@ -83,6 +88,19 @@ export function ContactForm() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              {/* Honeypot : invisible pour les humains, rempli par les bots */}
+              <div aria-hidden="true" className="absolute -left-[9999px] w-px h-px overflow-hidden">
+                <label htmlFor="website">Site web</label>
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                />
+              </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Nom</label>

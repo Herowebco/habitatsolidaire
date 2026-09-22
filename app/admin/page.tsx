@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { CheckCircle2, XCircle, Clock, LogOut, RefreshCw, ChevronDown, ChevronUp, CalendarDays, Lightbulb, Building2, Mail, Phone, Globe, ArrowLeft } from "lucide-react";
+import { CheckCircle2, XCircle, Clock, LogOut, RefreshCw, ChevronDown, ChevronUp, CalendarDays, Lightbulb, Building2, Mail, Phone, Globe, ArrowLeft, Loader2 } from "lucide-react";
 
 type Reservation = {
   id: string;
@@ -37,19 +37,12 @@ type Association = {
   id: string;
   nom: string;
   email: string;
-  secteur: string;
+  secteur: string | null;
   telephone: string | null;
   site_web: string | null;
-  description: string;
+  description: string | null;
   created_at: string;
 };
-
-// Démo — sera remplacé par les vraies inscriptions une fois le backend association branché
-const MOCK_ASSOCIATIONS: Association[] = [
-  { id: "1", nom: "Toqué comme un chef", email: "contact@toquecommeunchef.fr", secteur: "Éducation & insertion", telephone: "03 27 XX XX XX", site_web: null, description: "Ateliers cuisine et insertion par l'apprentissage culinaire.", created_at: "2026-05-12T10:00:00Z" },
-  { id: "2", nom: "Les Amis du Quartier", email: "contact@amisduquartier.fr", secteur: "Social & solidarité", telephone: null, site_web: "https://amisduquartier.fr", description: "Animation de quartier et lien social intergénérationnel.", created_at: "2026-06-03T09:30:00Z" },
-  { id: "3", nom: "Fil & Aiguille Solidaire", email: "filaiguille@asso-masny.fr", secteur: "Culture & loisirs", telephone: "06 XX XX XX XX", site_web: null, description: "Couture, recyclage textile et transmission de savoir-faire.", created_at: "2026-07-01T14:15:00Z" },
-];
 
 const STATUS_LABELS: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
   en_attente: { label: "En attente", color: "text-amber-600 bg-amber-50 border-amber-200", icon: <Clock size={12} /> },
@@ -77,8 +70,9 @@ export default function AdminPage() {
   const [authLoading, setAuthLoading] = useState(false);
   const [tab, setTab] = useState<"reservations" | "projets" | "associations">("reservations");
 
-  // Associations (démo front-only)
-  const [associations] = useState<Association[]>(MOCK_ASSOCIATIONS);
+  // Associations
+  const [associations, setAssociations] = useState<Association[]>([]);
+  const [assoLoading, setAssoLoading] = useState(false);
   const [assoExpanded, setAssoExpanded] = useState<string | null>(null);
 
   // Réservations
@@ -122,9 +116,17 @@ export default function AdminPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [password]);
 
+  const fetchAssociations = useCallback(async () => {
+    setAssoLoading(true);
+    const res = await fetch("/api/admin/associations", { headers: { "x-admin-secret": getPwd() } });
+    if (res.ok) setAssociations(await res.json());
+    setAssoLoading(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [password]);
+
   useEffect(() => {
-    if (authed) { fetchReservations(); fetchProjets(); }
-  }, [authed, fetchReservations, fetchProjets]);
+    if (authed) { fetchReservations(); fetchProjets(); fetchAssociations(); }
+  }, [authed, fetchReservations, fetchProjets, fetchAssociations]);
 
   useEffect(() => {
     const saved = sessionStorage.getItem("admin_pwd");
@@ -261,9 +263,9 @@ export default function AdminPage() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <button onClick={() => { fetchReservations(); fetchProjets(); }} disabled={resaLoading || projetLoading}
+            <button onClick={() => { fetchReservations(); fetchProjets(); fetchAssociations(); }} disabled={resaLoading || projetLoading || assoLoading}
               className="w-9 h-9 rounded-full bg-anthracite/5 hover:bg-anthracite/10 flex items-center justify-center transition-colors">
-              <RefreshCw size={14} className={`text-anthracite/60 ${resaLoading || projetLoading ? "animate-spin" : ""}`} />
+              <RefreshCw size={14} className={`text-anthracite/60 ${resaLoading || projetLoading || assoLoading ? "animate-spin" : ""}`} />
             </button>
             <button onClick={() => { setAuthed(false); sessionStorage.removeItem("admin_pwd"); }}
               className="w-9 h-9 rounded-full bg-anthracite/5 hover:bg-anthracite/10 flex items-center justify-center transition-colors">
@@ -441,7 +443,9 @@ export default function AdminPage() {
               Associations inscrites sur l&apos;espace association — {associations.length} au total.
             </p>
 
-            {associations.length === 0 ? (
+            {assoLoading && associations.length === 0 ? (
+              <div className="flex justify-center py-20"><Loader2 className="animate-spin text-anthracite/30" size={24} /></div>
+            ) : associations.length === 0 ? (
               <div className="text-center py-20 text-anthracite/40 font-manrope text-sm">Aucune association inscrite</div>
             ) : (
               <div className="flex flex-col gap-3">
@@ -456,9 +460,11 @@ export default function AdminPage() {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 flex-wrap mb-1">
                             <p className="font-epilogue font-bold text-anthracite text-sm">{a.nom}</p>
-                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border font-manrope text-vert-sauge bg-vert-sauge/8 border-vert-sauge/20">
-                              {a.secteur}
-                            </span>
+                            {a.secteur && (
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border font-manrope text-vert-sauge bg-vert-sauge/8 border-vert-sauge/20">
+                                {a.secteur}
+                              </span>
+                            )}
                           </div>
                           <p className="text-anthracite/50 font-manrope text-xs">{a.email}</p>
                         </div>
@@ -469,7 +475,9 @@ export default function AdminPage() {
                       </div>
                       {isExpanded && (
                         <div className="px-5 pb-5 border-t border-anthracite/6 pt-4 flex flex-col gap-3">
-                          <p className="text-sm text-anthracite/75 font-manrope leading-relaxed">{a.description}</p>
+                          <p className="text-sm text-anthracite/75 font-manrope leading-relaxed">
+                            {a.description || <span className="italic text-anthracite/40">Fiche non encore complétée</span>}
+                          </p>
                           <div className="flex flex-wrap gap-4 text-xs text-anthracite/55 font-manrope">
                             <span className="flex items-center gap-1.5"><Mail size={12} className="text-vert-sauge" />{a.email}</span>
                             {a.telephone && <span className="flex items-center gap-1.5"><Phone size={12} className="text-terracotta" />{a.telephone}</span>}

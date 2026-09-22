@@ -20,18 +20,30 @@ export default function ConnexionPage() {
   const [role, setRole] = useState<"choix" | "association">("choix");
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ nom: "", email: "", password: "" });
+  const [error, setError] = useState<string | null>(null);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   }
 
-  function handleLogin(e: React.FormEvent) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      sessionStorage.setItem("asso_session", JSON.stringify({ nom: form.nom, email: form.email }));
+    setError(null);
+    try {
+      // Enregistre l'association (ou la retrouve si déjà inscrite) dans Supabase
+      const res = await fetch("/api/associations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nom: form.nom, email: form.email }),
+      });
+      if (!res.ok) throw new Error("Erreur");
+      sessionStorage.setItem("asso_session", JSON.stringify({ nom: form.nom, email: form.email.trim().toLowerCase() }));
       router.push("/portail-association");
-    }, 600);
+    } catch {
+      setError("Une erreur est survenue. Réessayez dans un instant.");
+      setLoading(false);
+    }
   }
 
   return (
@@ -111,6 +123,8 @@ export default function ConnexionPage() {
                 <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Mot de passe</label>
                 <input type="password" name="password" required value={form.password} onChange={handleChange} placeholder="••••••••" className={inputStyle} />
               </div>
+
+              {error && <p className="text-sm text-red-500 font-manrope">{error}</p>}
 
               <button
                 type="submit"

@@ -25,6 +25,12 @@ const creneaux = ["Matin (9h - 12h)", "Après-midi (14h - 17h)", "Soirée (18h -
 
 const budgets = ["Moins de 500 €", "500 € – 1 000 €", "1 000 € – 3 000 €", "3 000 € – 5 000 €", "Plus de 5 000 €"];
 
+// Bornes de dates : réservation jusqu'à 30 jours à l'avance, 7 jours max
+const toISODate = (d: Date) => d.toISOString().split("T")[0];
+const addDays = (iso: string, n: number) => { const d = new Date(iso); d.setDate(d.getDate() + n); return toISODate(d); };
+const getMinDate = () => toISODate(new Date());
+const getMaxStartDate = () => addDays(getMinDate(), 30);
+
 const secteurs = ["Social & solidarité", "Culture & loisirs", "Sport", "Environnement", "Éducation & insertion", "Santé", "Autre"];
 
 function TabButton({ active, onClick, icon, label }: { active: boolean; onClick: () => void; icon: React.ReactNode; label: string }) {
@@ -69,15 +75,35 @@ export default function PortailAssociationPage() {
   // Réservation
   const [resaSent, setResaSent] = useState(false);
   const [resaLoading, setResaLoading] = useState(false);
-  const [resaForm, setResaForm] = useState({ salle: "", date_souhaitee: "", creneau: "", motif: "" });
+  const [resaForm, setResaForm] = useState({ salle: "", date_souhaitee: "", date_fin: "", creneau: "", motif: "" });
+  const [resaError, setResaError] = useState<string | null>(null);
 
-  function handleResaSubmit(e: React.FormEvent) {
+  async function handleResaSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!session) return;
     setResaLoading(true);
-    setTimeout(() => {
-      setResaLoading(false);
+    setResaError(null);
+    try {
+      const res = await fetch("/api/reservations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          association_name: session.nom,
+          email: session.email,
+          ...resaForm,
+          date_fin: resaForm.date_fin || resaForm.date_souhaitee,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || "Erreur");
+      }
       setResaSent(true);
-    }, 700);
+    } catch (err) {
+      setResaError(err instanceof Error && err.message !== "Erreur" ? err.message : "Une erreur est survenue. Réessayez dans un instant.");
+    } finally {
+      setResaLoading(false);
+    }
   }
 
   // Projet
@@ -85,28 +111,70 @@ export default function PortailAssociationPage() {
   const [projetLoading, setProjetLoading] = useState(false);
   const [projetForm, setProjetForm] = useState({ nom_projet: "", description: "", public_cible: "", budget_estime: "" });
 
-  function handleProjetSubmit(e: React.FormEvent) {
+  const [projetError, setProjetError] = useState<string | null>(null);
+
+  async function handleProjetSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!session) return;
     setProjetLoading(true);
-    setTimeout(() => {
-      setProjetLoading(false);
+    setProjetError(null);
+    try {
+      const res = await fetch("/api/projets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ association_name: session.nom, email: session.email, ...projetForm }),
+      });
+      if (!res.ok) throw new Error("Erreur");
       setProjetSent(true);
-    }, 700);
+    } catch {
+      setProjetError("Une erreur est survenue. Réessayez dans un instant.");
+    } finally {
+      setProjetLoading(false);
+    }
   }
 
   // Fiche
   const [ficheSaved, setFicheSaved] = useState(false);
   const [ficheLoading, setFicheLoading] = useState(false);
   const [ficheForm, setFicheForm] = useState({ description: "", secteur: "", telephone: "", site_web: "" });
+  const [ficheError, setFicheError] = useState<string | null>(null);
 
-  function handleFicheSubmit(e: React.FormEvent) {
+  // Précharge la fiche existante depuis Supabase
+  useEffect(() => {
+    if (!session?.email) return;
+    fetch(`/api/associations?email=${encodeURIComponent(session.email)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!data) return;
+        setFicheForm({
+          description: data.description ?? "",
+          secteur: data.secteur ?? "",
+          telephone: data.telephone ?? "",
+          site_web: data.site_web ?? "",
+        });
+      })
+      .catch(() => {});
+  }, [session?.email]);
+
+  async function handleFicheSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (!session) return;
     setFicheLoading(true);
-    setTimeout(() => {
-      setFicheLoading(false);
+    setFicheError(null);
+    try {
+      const res = await fetch("/api/associations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nom: session.nom, email: session.email, ...ficheForm }),
+      });
+      if (!res.ok) throw new Error("Erreur");
       setFicheSaved(true);
       setTimeout(() => setFicheSaved(false), 3000);
-    }, 700);
+    } catch {
+      setFicheError("Impossible d'enregistrer la fiche. Réessayez dans un instant.");
+    } finally {
+      setFicheLoading(false);
+    }
   }
 
   if (!session) return null;
@@ -171,21 +239,42 @@ export default function PortailAssociationPage() {
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Date</label>
-                    <input type="date" required value={resaForm.date_souhaitee} onChange={(e) => setResaForm((f) => ({ ...f, date_souhaitee: e.target.value }))} className={inputStyle} />
+                    <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Date de début</label>
+                    <input
+                      type="date"
+                      required
+                      min={getMinDate()}
+                      max={getMaxStartDate()}
+                      value={resaForm.date_souhaitee}
+                      onChange={(e) => setResaForm((f) => ({ ...f, date_souhaitee: e.target.value, date_fin: "" }))}
+                      className={inputStyle}
+                    />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Créneau</label>
-                    <select required value={resaForm.creneau} onChange={(e) => setResaForm((f) => ({ ...f, creneau: e.target.value }))} className={inputStyle}>
-                      <option value="">Choisir un créneau</option>
-                      {creneaux.map((c) => <option key={c} value={c}>{c}</option>)}
-                    </select>
+                    <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Date de fin <span className="normal-case tracking-normal font-normal">(facultatif)</span></label>
+                    <input
+                      type="date"
+                      min={resaForm.date_souhaitee || getMinDate()}
+                      max={resaForm.date_souhaitee ? addDays(resaForm.date_souhaitee, 7) : undefined}
+                      disabled={!resaForm.date_souhaitee}
+                      value={resaForm.date_fin}
+                      onChange={(e) => setResaForm((f) => ({ ...f, date_fin: e.target.value }))}
+                      className={`${inputStyle} disabled:opacity-50`}
+                    />
                   </div>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Créneau</label>
+                  <select required value={resaForm.creneau} onChange={(e) => setResaForm((f) => ({ ...f, creneau: e.target.value }))} className={inputStyle}>
+                    <option value="">Choisir un créneau</option>
+                    {creneaux.map((c) => <option key={c} value={c}>{c}</option>)}
+                  </select>
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label className="text-xs font-semibold text-anthracite/50 uppercase tracking-widest font-manrope">Motif</label>
                   <textarea rows={3} value={resaForm.motif} onChange={(e) => setResaForm((f) => ({ ...f, motif: e.target.value }))} placeholder="Décrivez l'usage prévu..." className={`${inputStyle} resize-none`} />
                 </div>
+                {resaError && <p className="text-sm text-red-500 font-manrope">{resaError}</p>}
                 <button type="submit" disabled={resaLoading} className="inline-flex items-center justify-center gap-2 bg-anthracite hover:bg-anthracite/85 disabled:opacity-60 text-blanc-doux font-semibold px-7 py-4 rounded-full text-sm transition-all font-manrope mt-1">
                   {resaLoading ? <Loader2 size={16} className="animate-spin" /> : <CalendarCheck size={16} />}
                   {resaLoading ? "Envoi en cours..." : "Envoyer la demande"}
@@ -224,6 +313,7 @@ export default function PortailAssociationPage() {
                     {budgets.map((b) => <option key={b} value={b}>{b}</option>)}
                   </select>
                 </div>
+                {projetError && <p className="text-sm text-red-500 font-manrope">{projetError}</p>}
                 <button type="submit" disabled={projetLoading} className="inline-flex items-center justify-center gap-2 bg-vert-profond hover:bg-vert-profond/90 disabled:opacity-60 text-blanc-doux font-semibold px-7 py-4 rounded-full text-sm transition-all font-manrope mt-1">
                   {projetLoading ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
                   {projetLoading ? "Envoi en cours..." : "Soumettre le projet"}
@@ -265,6 +355,7 @@ export default function PortailAssociationPage() {
                   <input type="url" value={ficheForm.site_web} onChange={(e) => setFicheForm((f) => ({ ...f, site_web: e.target.value }))} placeholder="https://..." className={inputStyle} />
                 </div>
               </div>
+              {ficheError && <p className="text-sm text-red-500 font-manrope">{ficheError}</p>}
               <button type="submit" disabled={ficheLoading} className="inline-flex items-center justify-center gap-2 bg-vert-sauge hover:bg-vert-sauge/90 disabled:opacity-60 text-blanc-doux font-semibold px-7 py-4 rounded-full text-sm transition-all font-manrope mt-1">
                 {ficheLoading ? <Loader2 size={16} className="animate-spin" /> : ficheSaved ? <CheckCircle2 size={16} /> : null}
                 {ficheLoading ? "Enregistrement..." : ficheSaved ? "Enregistré !" : "Enregistrer ma fiche"}
