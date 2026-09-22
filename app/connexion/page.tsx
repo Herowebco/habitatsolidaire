@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Building2, ShieldCheck, ArrowLeft, Loader2 } from "lucide-react";
+import { PortalBackground } from "@/components/PortalBackground";
 
 const cardStyle = {
   background: "rgba(255,253,248,0.90)",
@@ -48,16 +49,7 @@ export default function ConnexionPage() {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center px-4 py-16 overflow-hidden">
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url('/hero-section.svg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center 60%",
-        }}
-      >
-        <div className="absolute inset-0 bg-blanc-doux/55" />
-      </div>
+      <PortalBackground />
 
       <div className="relative w-full max-w-md rounded-3xl p-8" style={cardStyle}>
         <Link href="/" className="inline-flex items-center gap-1.5 text-anthracite/40 hover:text-anthracite/70 text-xs font-manrope font-semibold mb-6 transition-colors">

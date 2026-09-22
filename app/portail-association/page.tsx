@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CalendarDays, Lightbulb, Building2, LogOut, CheckCircle2, Loader2, Send, CalendarCheck } from "lucide-react";
+import { PortalBackground } from "@/components/PortalBackground";
 
 type Session = { nom: string; email: string };
 
@@ -180,7 +181,8 @@ export default function PortailAssociationPage() {
   if (!session) return null;
 
   return (
-    <div className="min-h-screen bg-creme">
+    <div className="relative min-h-screen">
+      <PortalBackground />
       {/* Header */}
       <div className="border-b border-anthracite/8 bg-blanc-doux/80 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">

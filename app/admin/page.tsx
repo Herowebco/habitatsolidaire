@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { CheckCircle2, XCircle, Clock, LogOut, RefreshCw, ChevronDown, ChevronUp, CalendarDays, Lightbulb, Building2, Mail, Phone, Globe, ArrowLeft, Loader2 } from "lucide-react";
+import { PortalBackground } from "@/components/PortalBackground";
 
 type Reservation = {
   id: string;
@@ -202,7 +203,8 @@ export default function AdminPage() {
 
   if (!authed) {
     return (
-      <div className="min-h-screen bg-creme flex items-center justify-center px-4">
+      <div className="relative min-h-screen flex items-center justify-center px-4">
+        <PortalBackground />
         <div className="w-full max-w-sm rounded-3xl p-8"
           style={{ background: "rgba(255,253,248,0.90)", backdropFilter: "blur(24px)", border: "1px solid rgba(255,255,255,0.70)", boxShadow: "0 8px 40px rgba(47,69,55,0.10)" }}>
           <Link href="/" className="inline-flex items-center gap-1.5 text-anthracite/40 hover:text-anthracite/70 text-xs font-manrope font-semibold mb-6 transition-colors">
@@ -228,7 +230,8 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-creme">
+    <div className="relative min-h-screen">
+      <PortalBackground />
       {toast && (
         <div className={`fixed top-4 right-4 z-50 px-5 py-3 rounded-2xl text-sm font-manrope font-semibold shadow-lg ${toast.type === "success" ? "bg-vert-profond text-blanc-doux" : "bg-red-500 text-white"}`}>
           {toast.msg}
